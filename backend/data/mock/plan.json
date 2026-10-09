@@ -1,0 +1,37 @@
+[
+  {
+    "id": "wk_today",
+    "day_offset": 0,
+    "sport": "bike",
+    "title": "3x15' a 250 W",
+    "planned_tss": 88,
+    "steps": [
+      {
+        "duration_min": 15,
+        "intensity": "endurance",
+        "power": {
+          "low_w": 165,
+          "high_w": 190
+        }
+      },
+      {
+        "repeat": 3,
+        "duration_min": 15,
+        "intensity": "sweet_spot",
+        "power": {
+          "low_w": 245,
+          "high_w": 255
+        },
+        "recovery_min": 5
+      },
+      {
+        "duration_min": 10,
+        "intensity": "recovery",
+        "power": {
+          "low_w": 130,
+          "high_w": 160
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "description": "Estado normal: buen sueño, HRV en línea, run suave ayer.",
+  "wellness_today": {
+    "sleep_hours": 7.67,
+    "hrv_rmssd_ms": 63.0,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  }
+}

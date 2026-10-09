@@ -1,0 +1,22 @@
+{
+  "description": "Sueño 5h12, HRV -21%, run fuerte ayer, carrera en 7 días.",
+  "wellness_today": {
+    "sleep_hours": 5.2,
+    "hrv_rmssd_ms": 48.2,
+    "resting_hr_bpm": 54,
+    "rpe": 8,
+    "legs": "heavy"
+  },
+  "yesterday_activity": {
+    "id": "act_01_0",
+    "day_offset": -1,
+    "sport": "run",
+    "title": "Run umbral 5x6'",
+    "duration_min": 65,
+    "tss": 92.0,
+    "intensity": "threshold",
+    "avg_hr_bpm": 166,
+    "distance_km": 13.4,
+    "rpe": 8
+  }
+}

@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.env
+node_modules/
+.next/
+.backup/
+.claude/
+.impeccable/review/
+.impeccable/decision/
+.impeccable/questions/
+*.log
+backend/package-lock.json

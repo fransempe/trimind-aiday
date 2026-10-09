@@ -1,0 +1,296 @@
+[
+  {
+    "day_offset": -42,
+    "sleep_hours": 7.07,
+    "hrv_rmssd_ms": 65.6,
+    "resting_hr_bpm": 50,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -41,
+    "sleep_hours": 8.11,
+    "hrv_rmssd_ms": 60.4,
+    "resting_hr_bpm": 49,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -40,
+    "sleep_hours": 7.91,
+    "hrv_rmssd_ms": 58.7,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -39,
+    "sleep_hours": 7.21,
+    "hrv_rmssd_ms": 59.6,
+    "resting_hr_bpm": 48,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -38,
+    "sleep_hours": 8.03,
+    "hrv_rmssd_ms": 62.9,
+    "resting_hr_bpm": 46,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -37,
+    "sleep_hours": 7.4,
+    "hrv_rmssd_ms": 59.2,
+    "resting_hr_bpm": 48,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -36,
+    "sleep_hours": 7.71,
+    "hrv_rmssd_ms": 58.2,
+    "resting_hr_bpm": 50,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -35,
+    "sleep_hours": 7.05,
+    "hrv_rmssd_ms": 57.4,
+    "resting_hr_bpm": 49,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -34,
+    "sleep_hours": 7.7,
+    "hrv_rmssd_ms": 61.4,
+    "resting_hr_bpm": 46,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -33,
+    "sleep_hours": 7.22,
+    "hrv_rmssd_ms": 61.7,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -32,
+    "sleep_hours": 7.15,
+    "hrv_rmssd_ms": 62.0,
+    "resting_hr_bpm": 48,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -31,
+    "sleep_hours": 8.15,
+    "hrv_rmssd_ms": 62.1,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -30,
+    "sleep_hours": 7.45,
+    "hrv_rmssd_ms": 65.3,
+    "resting_hr_bpm": 48,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -29,
+    "sleep_hours": 7.91,
+    "hrv_rmssd_ms": 54.7,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -28,
+    "sleep_hours": 7.79,
+    "hrv_rmssd_ms": 59.9,
+    "resting_hr_bpm": 50,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -27,
+    "sleep_hours": 7.18,
+    "hrv_rmssd_ms": 58.3,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -26,
+    "sleep_hours": 7.63,
+    "hrv_rmssd_ms": 57.0,
+    "resting_hr_bpm": 48,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -25,
+    "sleep_hours": 7.7,
+    "hrv_rmssd_ms": 58.8,
+    "resting_hr_bpm": 46,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -24,
+    "sleep_hours": 7.72,
+    "hrv_rmssd_ms": 63.3,
+    "resting_hr_bpm": 48,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -23,
+    "sleep_hours": 8.11,
+    "hrv_rmssd_ms": 64.6,
+    "resting_hr_bpm": 46,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -22,
+    "sleep_hours": 7.37,
+    "hrv_rmssd_ms": 61.8,
+    "resting_hr_bpm": 48,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -21,
+    "sleep_hours": 8.05,
+    "hrv_rmssd_ms": 59.9,
+    "resting_hr_bpm": 48,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -20,
+    "sleep_hours": 7.52,
+    "hrv_rmssd_ms": 58.0,
+    "resting_hr_bpm": 50,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -19,
+    "sleep_hours": 7.73,
+    "hrv_rmssd_ms": 59.6,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -18,
+    "sleep_hours": 7.51,
+    "hrv_rmssd_ms": 63.8,
+    "resting_hr_bpm": 46,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -17,
+    "sleep_hours": 7.08,
+    "hrv_rmssd_ms": 64.7,
+    "resting_hr_bpm": 48,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -16,
+    "sleep_hours": 7.36,
+    "hrv_rmssd_ms": 55.3,
+    "resting_hr_bpm": 49,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -15,
+    "sleep_hours": 7.3,
+    "hrv_rmssd_ms": 65.7,
+    "resting_hr_bpm": 50,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -14,
+    "sleep_hours": 7.95,
+    "hrv_rmssd_ms": 63.4,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -13,
+    "sleep_hours": 7.12,
+    "hrv_rmssd_ms": 65.7,
+    "resting_hr_bpm": 49,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -12,
+    "sleep_hours": 7.8,
+    "hrv_rmssd_ms": 59.7,
+    "resting_hr_bpm": 49,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -11,
+    "sleep_hours": 7.69,
+    "hrv_rmssd_ms": 60.2,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -10,
+    "sleep_hours": 7.47,
+    "hrv_rmssd_ms": 55.8,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -9,
+    "sleep_hours": 7.4,
+    "hrv_rmssd_ms": 58.7,
+    "resting_hr_bpm": 46,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -8,
+    "sleep_hours": 7.31,
+    "hrv_rmssd_ms": 60.9,
+    "resting_hr_bpm": 50,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -7,
+    "sleep_hours": 7.72,
+    "hrv_rmssd_ms": 60.0,
+    "resting_hr_bpm": 48,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -6,
+    "sleep_hours": 8.16,
+    "hrv_rmssd_ms": 66.3,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -5,
+    "sleep_hours": 8.02,
+    "hrv_rmssd_ms": 64.8,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -4,
+    "sleep_hours": 8.14,
+    "hrv_rmssd_ms": 58.8,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -3,
+    "sleep_hours": 7.44,
+    "hrv_rmssd_ms": 61.9,
+    "resting_hr_bpm": 49,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -2,
+    "sleep_hours": 7.79,
+    "hrv_rmssd_ms": 63.2,
+    "resting_hr_bpm": 47,
+    "legs": "normal"
+  },
+  {
+    "day_offset": -1,
+    "sleep_hours": 7.49,
+    "hrv_rmssd_ms": 59.1,
+    "resting_hr_bpm": 46,
+    "legs": "normal"
+  }
+]

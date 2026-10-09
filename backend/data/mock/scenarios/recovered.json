@@ -1,0 +1,22 @@
+{
+  "description": "Durmió 8h14, HRV normal, RPE 2: se restaura el plan.",
+  "wellness_today": {
+    "sleep_hours": 8.23,
+    "hrv_rmssd_ms": 63.5,
+    "resting_hr_bpm": 46,
+    "rpe": 2,
+    "legs": "fresh"
+  },
+  "yesterday_activity": {
+    "id": "act_01_0",
+    "day_offset": -1,
+    "sport": "run",
+    "title": "Run umbral 5x6'",
+    "duration_min": 65,
+    "tss": 92.0,
+    "intensity": "threshold",
+    "avg_hr_bpm": 166,
+    "distance_km": 13.4,
+    "rpe": 8
+  }
+}

@@ -1,0 +1,750 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T15:05:11.351Z",
+  "title": "Design System: TriMind AI",
+  "extensions": {
+    "colorMeta": {
+      "graphite-table": {
+        "role": "neutral",
+        "displayName": "Mesa grafito",
+        "canonical": "#0f1113",
+        "tonalRamp": [
+          "#040405",
+          "#070809",
+          "#0a0b0c",
+          "#0d0e10",
+          "#27292b",
+          "#636466",
+          "#9fa0a1",
+          "#dbdbdc"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Hoja",
+        "canonical": "#15181b",
+        "tonalRamp": [
+          "#050607",
+          "#090b0c",
+          "#0e1012",
+          "#121417",
+          "#2c2f32",
+          "#67696b",
+          "#a1a3a4",
+          "#dcdcdd"
+        ]
+      },
+      "popover": {
+        "role": "neutral",
+        "displayName": "Popover",
+        "canonical": "#1b1f23",
+        "tonalRamp": [
+          "#070809",
+          "#0c0e10",
+          "#121417",
+          "#171a1e",
+          "#323539",
+          "#6b6d70",
+          "#a4a5a7",
+          "#ddddde"
+        ]
+      },
+      "muted-surface": {
+        "role": "neutral",
+        "displayName": "Superficie apagada",
+        "canonical": "#1d2125",
+        "tonalRamp": [
+          "#070809",
+          "#0d0f11",
+          "#131518",
+          "#191c1f",
+          "#34373b",
+          "#6c6f71",
+          "#a5a6a8",
+          "#dddede"
+        ]
+      },
+      "accent-surface": {
+        "role": "neutral",
+        "displayName": "Acento de hover",
+        "canonical": "#22272c",
+        "tonalRamp": [
+          "#090a0b",
+          "#0f1214",
+          "#16191d",
+          "#1d2125",
+          "#383d41",
+          "#6f7376",
+          "#a7a9ab",
+          "#dedfdf"
+        ]
+      },
+      "rail": {
+        "role": "neutral",
+        "displayName": "Rail",
+        "canonical": "#0b0d0f",
+        "tonalRamp": [
+          "#030304",
+          "#050607",
+          "#07080a",
+          "#090b0d",
+          "#232527",
+          "#606263",
+          "#9d9e9f",
+          "#dadbdb"
+        ]
+      },
+      "rail-accent": {
+        "role": "neutral",
+        "displayName": "Rail activo",
+        "canonical": "#171a1d",
+        "tonalRamp": [
+          "#060707",
+          "#0a0c0d",
+          "#0f1113",
+          "#141619",
+          "#2e3134",
+          "#686a6c",
+          "#a2a3a5",
+          "#dcdddd"
+        ]
+      },
+      "rail-border": {
+        "role": "neutral",
+        "displayName": "Filete del rail",
+        "canonical": "#22262a",
+        "tonalRamp": [
+          "#090a0b",
+          "#0f1113",
+          "#16191b",
+          "#1d2024",
+          "#383c3f",
+          "#6f7275",
+          "#a7a8aa",
+          "#dededf"
+        ]
+      },
+      "bone-ink": {
+        "role": "neutral",
+        "displayName": "Tinta hueso",
+        "canonical": "#ece7db",
+        "tonalRamp": [
+          "#3b3a37",
+          "#6a6863",
+          "#99968e",
+          "#c9c4ba",
+          "#eee9df",
+          "#f3efe8",
+          "#f7f5f1",
+          "#fcfbfa"
+        ]
+      },
+      "warm-gray": {
+        "role": "neutral",
+        "displayName": "Gris cálido",
+        "canonical": "#a39d91",
+        "tonalRamp": [
+          "#292724",
+          "#494741",
+          "#6a665e",
+          "#8b857b",
+          "#aca79c",
+          "#c3bfb8",
+          "#dad8d3",
+          "#f1f0ef"
+        ]
+      },
+      "faint": {
+        "role": "neutral",
+        "displayName": "Tenue",
+        "canonical": "#8c867c",
+        "tonalRamp": [
+          "#23221f",
+          "#3f3c38",
+          "#5b5751",
+          "#777269",
+          "#989289",
+          "#b4b0aa",
+          "#d1cfcb",
+          "#eeedeb"
+        ]
+      },
+      "band": {
+        "role": "neutral",
+        "displayName": "Banda hueso",
+        "canonical": "#ece7db",
+        "tonalRamp": [
+          "#3b3a37",
+          "#6a6863",
+          "#99968e",
+          "#c9c4ba",
+          "#eee9df",
+          "#f3efe8",
+          "#f7f5f1",
+          "#fcfbfa"
+        ]
+      },
+      "band-ink": {
+        "role": "neutral",
+        "displayName": "Tinta de banda",
+        "canonical": "#15181b",
+        "tonalRamp": [
+          "#050607",
+          "#090b0c",
+          "#0e1012",
+          "#121417",
+          "#2c2f32",
+          "#67696b",
+          "#a1a3a4",
+          "#dcdcdd"
+        ]
+      },
+      "band-muted": {
+        "role": "neutral",
+        "displayName": "Gris pardo de banda",
+        "canonical": "#5d5850",
+        "tonalRamp": [
+          "#171614",
+          "#2a2824",
+          "#3c3934",
+          "#4f4b44",
+          "#6d6962",
+          "#96928d",
+          "#bebcb9",
+          "#e7e6e5"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Filete",
+        "canonical": "#2a2e33",
+        "tonalRamp": [
+          "#0b0c0d",
+          "#131517",
+          "#1b1e21",
+          "#24272b",
+          "#3f4347",
+          "#75777a",
+          "#aaabad",
+          "#dfe0e0"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Filete fuerte",
+        "canonical": "#40464d",
+        "tonalRamp": [
+          "#101213",
+          "#1d1f23",
+          "#2a2e32",
+          "#363c41",
+          "#53595f",
+          "#83878b",
+          "#b3b5b8",
+          "#e2e3e4"
+        ]
+      },
+      "input": {
+        "role": "neutral",
+        "displayName": "Borde de campo",
+        "canonical": "#3a4046",
+        "tonalRamp": [
+          "#0f1012",
+          "#1a1d1f",
+          "#262a2e",
+          "#31363c",
+          "#4e5359",
+          "#7f8387",
+          "#b0b3b5",
+          "#e1e2e3"
+        ]
+      },
+      "grid": {
+        "role": "neutral",
+        "displayName": "Grilla de gráfico",
+        "canonical": "#23272b",
+        "tonalRamp": [
+          "#090a0b",
+          "#101213",
+          "#17191c",
+          "#1e2125",
+          "#393d40",
+          "#707375",
+          "#a7a9aa",
+          "#dedfdf"
+        ]
+      },
+      "axis": {
+        "role": "neutral",
+        "displayName": "Eje de gráfico",
+        "canonical": "#8a847a",
+        "tonalRamp": [
+          "#23211f",
+          "#3e3b37",
+          "#5a564f",
+          "#757068",
+          "#969087",
+          "#b3afa9",
+          "#d0ceca",
+          "#ededeb"
+        ]
+      },
+      "reagent": {
+        "role": "primary",
+        "displayName": "Ámbar reactivo",
+        "canonical": "#e8a93b",
+        "tonalRamp": [
+          "#3a2a0f",
+          "#684c1b",
+          "#976e26",
+          "#c59032",
+          "#eab24f",
+          "#f0c780",
+          "#f6ddb1",
+          "#fcf2e2"
+        ]
+      },
+      "good": {
+        "role": "secondary",
+        "displayName": "Verde de estado",
+        "canonical": "#4cb874",
+        "tonalRamp": [
+          "#132e1d",
+          "#225334",
+          "#31784b",
+          "#419c63",
+          "#5ebf82",
+          "#8bd1a5",
+          "#b7e3c7",
+          "#e4f4ea"
+        ]
+      },
+      "critical": {
+        "role": "secondary",
+        "displayName": "Rojo crítico",
+        "canonical": "#e5534b",
+        "tonalRamp": [
+          "#391513",
+          "#672522",
+          "#953631",
+          "#c34740",
+          "#e8645d",
+          "#ee8f8a",
+          "#f5bab7",
+          "#fbe5e4"
+        ]
+      },
+      "swim": {
+        "role": "tertiary",
+        "displayName": "Azul natación",
+        "canonical": "#3987e5",
+        "tonalRamp": [
+          "#0e2239",
+          "#1a3d67",
+          "#255895",
+          "#3073c3",
+          "#4d93e8",
+          "#7eb1ee",
+          "#b0cff5",
+          "#e1edfb"
+        ]
+      },
+      "bike": {
+        "role": "tertiary",
+        "displayName": "Naranja ciclismo",
+        "canonical": "#d95926",
+        "tonalRamp": [
+          "#36160a",
+          "#622811",
+          "#8d3a19",
+          "#b84c20",
+          "#dd6a3c",
+          "#e69372",
+          "#f0bda8",
+          "#f9e6de"
+        ]
+      },
+      "run": {
+        "role": "tertiary",
+        "displayName": "Verde running",
+        "canonical": "#199e70",
+        "tonalRamp": [
+          "#06281c",
+          "#0b4732",
+          "#106749",
+          "#15865f",
+          "#30a87e",
+          "#6ac0a2",
+          "#a3d8c6",
+          "#ddf0ea"
+        ]
+      },
+      "atl-violet": {
+        "role": "tertiary",
+        "displayName": "Violeta ATL",
+        "canonical": "#9085e9",
+        "tonalRamp": [
+          "#24213a",
+          "#413c69",
+          "#5e5697",
+          "#7a71c6",
+          "#9b91eb",
+          "#b7b0f1",
+          "#d3cef6",
+          "#eeedfc"
+        ]
+      },
+      "zone-z1": {
+        "role": "data",
+        "displayName": "Zona Z1 Recuperación",
+        "canonical": "#3d4247",
+        "tonalRamp": [
+          "#2b2f33",
+          "#3d4247",
+          "#6b675f",
+          "#9a9487",
+          "#c4bdaf",
+          "#e2dccf",
+          "#f7f3ea",
+          "#ffffff"
+        ]
+      },
+      "zone-z2": {
+        "role": "data",
+        "displayName": "Zona Z2 Resistencia",
+        "canonical": "#6b675f",
+        "tonalRamp": [
+          "#2b2f33",
+          "#3d4247",
+          "#6b675f",
+          "#9a9487",
+          "#c4bdaf",
+          "#e2dccf",
+          "#f7f3ea",
+          "#ffffff"
+        ]
+      },
+      "zone-z3": {
+        "role": "data",
+        "displayName": "Zona Z3 Tempo",
+        "canonical": "#9a9487",
+        "tonalRamp": [
+          "#2b2f33",
+          "#3d4247",
+          "#6b675f",
+          "#9a9487",
+          "#c4bdaf",
+          "#e2dccf",
+          "#f7f3ea",
+          "#ffffff"
+        ]
+      },
+      "zone-z3-4": {
+        "role": "data",
+        "displayName": "Zona Z3-4 Sweet spot",
+        "canonical": "#c4bdaf",
+        "tonalRamp": [
+          "#2b2f33",
+          "#3d4247",
+          "#6b675f",
+          "#9a9487",
+          "#c4bdaf",
+          "#e2dccf",
+          "#f7f3ea",
+          "#ffffff"
+        ]
+      },
+      "zone-z4": {
+        "role": "data",
+        "displayName": "Zona Z4 Umbral",
+        "canonical": "#e2dccf",
+        "tonalRamp": [
+          "#2b2f33",
+          "#3d4247",
+          "#6b675f",
+          "#9a9487",
+          "#c4bdaf",
+          "#e2dccf",
+          "#f7f3ea",
+          "#ffffff"
+        ]
+      },
+      "zone-z5": {
+        "role": "data",
+        "displayName": "Zona Z5 VO2max",
+        "canonical": "#f7f3ea",
+        "tonalRamp": [
+          "#2b2f33",
+          "#3d4247",
+          "#6b675f",
+          "#9a9487",
+          "#c4bdaf",
+          "#e2dccf",
+          "#f7f3ea",
+          "#ffffff"
+        ]
+      },
+      "zone-z6": {
+        "role": "data",
+        "displayName": "Zona Z6 Anaeróbico",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#2b2f33",
+          "#3d4247",
+          "#6b675f",
+          "#9a9487",
+          "#c4bdaf",
+          "#e2dccf",
+          "#f7f3ea",
+          "#ffffff"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "decision": {
+        "displayName": "Decision",
+        "purpose": "Train / Modify / Recover en la conclusión, una por pantalla."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Título de página (PageHead)."
+      },
+      "reading-xl": {
+        "displayName": "Reading XL",
+        "purpose": "Cifra protagonista de una hoja: readiness score, D-7."
+      },
+      "title-lead": {
+        "displayName": "Title lead",
+        "purpose": "Razón principal junto a la decisión."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Título de hoja en su cabecera."
+      },
+      "reading": {
+        "displayName": "Reading",
+        "purpose": "Cifra de una celda de lecturas."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Explicaciones, máximo 66ch."
+      },
+      "body-small": {
+        "displayName": "Body small",
+        "purpose": "Rótulos, leyendas, ejes, metadatos."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Encabezados de columna y rótulos de dato en mayúsculas."
+      },
+      "band-label": {
+        "displayName": "Band label",
+        "purpose": "Rótulos de campo de la banda de protocolo."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Ids de corrida, tiempos de traza, modelos y medidas."
+      }
+    },
+    "shadows": [
+      {
+        "name": "floating-layer",
+        "value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+        "purpose": "Solo tooltips de gráficos, popovers y toasts. Las hojas no llevan sombra."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ceiling-draw",
+        "value": "0.9s cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Trazo de la línea de techo cuando llega la decisión."
+      },
+      {
+        "name": "ceiling-strike",
+        "value": "0.35s, delay 0.85s",
+        "purpose": "Aparición del tachado de lo que cruza el techo."
+      },
+      {
+        "name": "ceiling-revised",
+        "value": "0.4s, delay 1.1s",
+        "purpose": "Aparición del ajuste del Head Coach."
+      },
+      {
+        "name": "sheet-border",
+        "value": "500ms color",
+        "purpose": "Cambio del filete de la hoja a ámbar al quedar activa."
+      },
+      {
+        "name": "led-ping",
+        "value": "1s cubic-bezier(0, 0, 0.2, 1) infinite",
+        "purpose": "Pulso del LED de dispositivo conectado; se apaga con movimiento reducido."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal: aceptar ajuste, empezar, conectar.",
+      "html": "<button class=\"ds-btn-primary\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>Aceptar ajuste</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid transparent;border-radius:4px;background:var(--primary,#ece7db);color:var(--primary-foreground,#15181b);font:500 14px Archivo,sans-serif;cursor:pointer;transition:background .15s}.ds-btn-primary:hover{background:color-mix(in oklab,#ece7db 80%,transparent)}.ds-btn-primary:focus-visible{outline:2px solid var(--reagent,#e8a93b);outline-offset:2px}.ds-btn-primary:active{transform:translateY(1px)}"
+    },
+    {
+      "name": "Botón outline",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Acción alternativa: mantener plan, desconectar, sincronizar.",
+      "html": "<button class=\"ds-btn-outline\">Mantener plan</button>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--input,#3a4046);border-radius:4px;background:color-mix(in oklab,#3a4046 30%,transparent);color:var(--foreground,#ece7db);font:500 14px Archivo,sans-serif;cursor:pointer;transition:background .15s}.ds-btn-outline:hover{background:color-mix(in oklab,#3a4046 50%,transparent)}.ds-btn-outline:focus-visible{outline:2px solid var(--reagent,#e8a93b);outline-offset:2px}.ds-btn-outline:active{transform:translateY(1px)}"
+    },
+    {
+      "name": "Banda de protocolo",
+      "kind": "nav",
+      "refersTo": "protocol-band",
+      "description": "Cabecera impresa del informe con campos rótulo/valor y Ask Coaching Team.",
+      "html": "<header class=\"ds-band\"><div class=\"ds-band-title\"><b>Protocolo diario</b><code>run_muznj18g</code></div><div class=\"ds-band-field\"><span>Atleta</span><strong>Tomás Ferreyra</strong></div><div class=\"ds-band-field\"><span>FTP</span><strong>270 W</strong></div><div class=\"ds-band-field\"><span>Carrera</span><strong>D-7 · 70.3</strong></div><div class=\"ds-band-field\"><span>Dispositivos</span><strong><i class=\"ds-band-led\"></i>Garmin · Strava</strong></div><button class=\"ds-band-btn\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2z\"/></svg>Ask Coaching Team</button></header>",
+      "css": ".ds-band{display:flex;flex-wrap:wrap;align-items:center;gap:8px 32px;padding:10px 32px;background:var(--band,#ece7db);color:var(--band-ink,#15181b);border-bottom:1px solid rgba(0,0,0,.2);font-family:Archivo,sans-serif}.ds-band-title{margin-right:auto;display:flex;align-items:baseline;gap:12px}.ds-band-title b{font-size:17px;font-weight:700;font-stretch:72%;letter-spacing:-.01em}.ds-band-title code{font:0.72rem 'Martian Mono',monospace;color:var(--band-muted,#5d5850)}.ds-band-field{display:flex;flex-direction:column;line-height:1.25}.ds-band-field span{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-stretch:78%;color:var(--band-muted,#5d5850)}.ds-band-field strong{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;font-stretch:78%;font-variant-numeric:tabular-nums}.ds-band-led{display:inline-block;width:10px;height:10px;border-radius:50%;background:#4cb874}.ds-band-btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:0;border-radius:3px;background:var(--band-ink,#15181b);color:var(--band,#ece7db);font:600 14px Archivo,sans-serif;cursor:pointer;transition:opacity .15s}.ds-band-btn:hover{opacity:.9}.ds-band-btn:focus-visible{outline:2px solid var(--reagent,#e8a93b);outline-offset:2px}"
+    },
+    {
+      "name": "Rail de navegación",
+      "kind": "nav",
+      "refersTo": "nav-rail",
+      "description": "Navegación grafito con filetes; activo en hueso con ícono y punto ámbar.",
+      "html": "<nav class=\"ds-rail\"><div class=\"ds-rail-mark\">TriMind<span>.</span></div><a class=\"ds-rail-item is-active\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m12 14 4-4\"/><path d=\"M3.34 19a10 10 0 1 1 17.32 0\"/></svg><b>Today</b><i></i></a><a class=\"ds-rail-item\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m12 14 4-4\"/><path d=\"M3.34 19a10 10 0 1 1 17.32 0\"/></svg><span>Training</span></a><a class=\"ds-rail-item\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m12 14 4-4\"/><path d=\"M3.34 19a10 10 0 1 1 17.32 0\"/></svg><span>Recovery</span></a></nav>",
+      "css": ".ds-rail{width:224px;padding:20px 16px;background:var(--sidebar,#0b0d0f);font-family:Archivo,sans-serif}.ds-rail-mark{font-size:26px;font-weight:700;font-stretch:66%;letter-spacing:-.02em;color:#ece7db;margin-bottom:36px}.ds-rail-mark span{color:var(--reagent,#e8a93b)}.ds-rail-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--sidebar-border,#22262a);font-size:14px;color:var(--muted-foreground,#a39d91);text-decoration:none;transition:color .15s}.ds-rail-item:last-child{border-bottom:1px solid var(--sidebar-border,#22262a)}.ds-rail-item:hover{color:#ece7db}.ds-rail-item:focus-visible{outline:2px solid var(--reagent,#e8a93b);outline-offset:2px}.ds-rail-item.is-active{color:#ece7db}.ds-rail-item.is-active svg{color:var(--reagent,#e8a93b)}.ds-rail-item.is-active b{font-weight:600}.ds-rail-item i{margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--reagent,#e8a93b)}"
+    },
+    {
+      "name": "Hoja",
+      "kind": "card",
+      "refersTo": "sheet",
+      "description": "Sección del protocolo: filete superior fuerte y cabecera con filete fino, sin sombra.",
+      "html": "<section class=\"ds-sheet\"><div class=\"ds-sheet-head\"><h2>Readiness score</h2><span>Reglas OK</span></div><p class=\"ds-sheet-body\">Pesos: HRV 35% · sueño 25% · carga 25% · subjetivo 15%.</p></section>",
+      "css": ".ds-sheet{border-top:1px solid var(--rule-strong,#40464d);padding-bottom:8px;background:transparent;color:#ece7db;font-family:Archivo,sans-serif;transition:border-color .5s}.ds-sheet.is-active{border-top:2px solid var(--reagent,#e8a93b)}.ds-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:10px 0;margin-bottom:16px;border-bottom:1px solid var(--rule,#2a2e33)}.ds-sheet-head h2{margin:0;font-size:15px;font-weight:600;letter-spacing:-.005em}.ds-sheet-head span{font-size:13px;color:var(--good,#4cb874)}.ds-sheet-body{margin:0;font-size:13px;color:var(--muted-foreground,#a39d91)}"
+    },
+    {
+      "name": "Sello de decisión",
+      "kind": "chip",
+      "refersTo": "decision-seal-modify",
+      "description": "Train / Modify / Recover con borde fino, mayúsculas condensadas e ícono.",
+      "html": "<span class=\"ds-seal ds-seal-modify\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 21h8\"/><path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/></svg>Modify</span> <span class=\"ds-seal ds-seal-train\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>Train</span>",
+      "css": ".ds-seal{display:inline-flex;align-items:center;gap:6px;padding:2px 6px;border:1px solid;border-radius:2px;font:600 12px Archivo,sans-serif;font-stretch:76%;letter-spacing:.04em;text-transform:uppercase}.ds-seal-modify{color:#e8a93b;border-color:color-mix(in oklab,#e8a93b 55%,transparent)}.ds-seal-train{color:#4cb874;border-color:color-mix(in oklab,#4cb874 55%,transparent)}"
+    },
+    {
+      "name": "Campo",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Peso, altura y preguntas al staff.",
+      "html": "<label class=\"ds-field\"><span>Peso (kg)</span><input class=\"ds-input\" value=\"72\"></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:6px;font:13px Archivo,sans-serif;color:var(--muted-foreground,#a39d91)}.ds-input{height:32px;padding:4px 10px;border:1px solid var(--input,#3a4046);border-radius:4px;background:color-mix(in oklab,#3a4046 30%,transparent);color:#ece7db;font:14px Archivo,sans-serif;font-variant-numeric:tabular-nums;outline:none;transition:border-color .15s,box-shadow .15s}.ds-input:hover{border-color:#40464d}.ds-input:focus-visible{border-color:var(--reagent,#e8a93b);box-shadow:0 0 0 3px color-mix(in oklab,#e8a93b 50%,transparent)}"
+    },
+    {
+      "name": "Celda de lectura",
+      "kind": "custom",
+      "refersTo": "reading",
+      "description": "StatTile: rótulo, cifra condensada tabular, unidad y detalle.",
+      "html": "<div class=\"ds-readings\"><div class=\"ds-reading\"><p>CTL importada</p><p><b>72</b><span>TSS/d</span></p><small>Ajusta el volumen de partida</small></div><div class=\"ds-reading\"><p>Sueño promedio 14 d</p><p><b>7h41</b></p><small>Sin recorte</small></div></div>",
+      "css": ".ds-readings{display:flex;border-top:1px solid #2a2e33;font-family:Archivo,sans-serif}.ds-reading{flex:1;padding:12px 16px 12px 0}.ds-reading+.ds-reading{border-left:1px solid #2a2e33;padding-left:16px}.ds-reading p{margin:0;font-size:13px;color:#a39d91}.ds-reading p+p{margin-top:4px;line-height:1}.ds-reading b{font-size:28px;font-weight:600;color:#ece7db;font-stretch:78%;letter-spacing:-.01em;font-variant-numeric:tabular-nums lining-nums}.ds-reading span{margin-left:4px;font-size:13px}.ds-reading small{display:block;margin-top:6px;font-size:12px;color:#a39d91}"
+    },
+    {
+      "name": "Perfil con techo",
+      "kind": "custom",
+      "refersTo": "reagent",
+      "description": "Movimiento distintivo: perfil de potencia, techo ámbar y exceso tachado.",
+      "html": "<svg class=\"ds-ceiling\" width=\"360\" height=\"140\" viewBox=\"0 0 360 140\"><defs><pattern id=\"ds-struck\" width=\"8\" height=\"8\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"8\" stroke=\"#e5534b\" stroke-width=\"3\"/></pattern></defs><line x1=\"40\" x2=\"350\" y1=\"120\" y2=\"120\" stroke=\"#40464d\"/><rect x=\"41\" y=\"70\" width=\"70\" height=\"50\" rx=\"1.5\" fill=\"#6b675f\"/><rect x=\"113\" y=\"30\" width=\"50\" height=\"90\" rx=\"1.5\" fill=\"#ece7db\" fill-opacity=\".1\" stroke=\"#8c867c\" stroke-dasharray=\"4 3\" stroke-width=\"1.5\"/><rect x=\"113\" y=\"30\" width=\"50\" height=\"20\" fill=\"url(#ds-struck)\"/><rect x=\"113\" y=\"62\" width=\"50\" height=\"58\" rx=\"1.5\" fill=\"#9a9487\"/><rect x=\"165\" y=\"70\" width=\"80\" height=\"50\" rx=\"1.5\" fill=\"#6b675f\"/><line class=\"ds-ceiling-line\" x1=\"40\" x2=\"350\" y1=\"50\" y2=\"50\" stroke=\"#e8a93b\" stroke-width=\"3\"/><text x=\"36\" y=\"54\" text-anchor=\"end\" font-size=\"12\" font-weight=\"700\" fill=\"#e8a93b\">235 W</text><text x=\"115\" y=\"24\" font-size=\"12\" font-weight=\"700\" fill=\"#e5534b\">+15 W tachado</text></svg>",
+      "css": ".ds-ceiling{display:block;background:#0f1113;font-family:Archivo,sans-serif;font-variant-numeric:tabular-nums}.ds-ceiling-line{stroke-dasharray:320;stroke-dashoffset:320;animation:ds-draw .9s cubic-bezier(.16,1,.3,1) forwards}@keyframes ds-draw{to{stroke-dashoffset:0}}@media (prefers-reduced-motion:reduce){.ds-ceiling-line{animation:none;stroke-dashoffset:0}}"
+    },
+    {
+      "name": "LED de dispositivo",
+      "kind": "custom",
+      "refersTo": "good",
+      "description": "Estado de conexión fijado por el usuario: verde con pulso si está conectado, tenue si no.",
+      "html": "<span class=\"ds-led-row\"><span class=\"ds-led is-on\"></span>Garmin Connect</span> <span class=\"ds-led-row\"><span class=\"ds-led\"></span>Wahoo</span>",
+      "css": ".ds-led-row{display:inline-flex;align-items:center;gap:8px;font:600 13px Archivo,sans-serif;color:#ece7db;margin-right:16px}.ds-led{position:relative;display:inline-block;width:10px;height:10px;border-radius:50%;background:#8c867c}.ds-led.is-on{background:#4cb874}.ds-led.is-on::before{content:'';position:absolute;inset:0;border-radius:50%;background:#4cb874;opacity:.6;animation:ds-ping 1s cubic-bezier(0,0,.2,1) infinite}@keyframes ds-ping{75%,100%{transform:scale(2);opacity:0}}@media (prefers-reduced-motion:reduce){.ds-led.is-on::before{display:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Protocolo de laboratorio",
+    "overview": "Cada pantalla es una hoja de un informe de laboratorio de rendimiento deportivo, apoyada sobre una mesa de luz grafito. No hay tarjetas: hay hojas separadas por filetes finos, con una cabecera de protocolo impresa en banda hueso, lecturas por estación en franjas tabulares y una conclusión firmada por el Head Coach. La densidad es de planilla: cifras tabulares, columnas alineadas, etiquetas cortas.\n\nLa tipografía hace el trabajo de jerarquía. Archivo cambia de ancho según el rol: muy condensada para la decisión y las cifras grandes, condensada para lecturas y etiquetas, normal para el texto corrido. Martian Mono aparece solo donde un instrumento imprimiría un código: ids de corrida, tiempos de la traza, nombres de modelo y medidas. El color está racionado: tinta hueso para casi todo, gris cálido para lo secundario, ámbar reactivo solo para el umbral y lo que espera al atleta, y los tres colores por deporte solo sobre datos de ese deporte.\n\nEl movimiento distintivo es el techo de intensidad: una línea ámbar que se dibuja una sola vez cuando llega la decisión, tacha en rojo lo que del plan original la cruza y deja pasar por debajo el ajuste en la rampa de valor. Lo que el sistema rechaza explícitamente: la grilla de tarjetas KPI con acento neón y la estética de app de fitness de consumo.",
+    "keyCharacteristics": [
+      "Mesa grafito, hojas con filete superior, sin tarjetas ni sombras de reposo.",
+      "Banda de protocolo hueso con tinta grafito arriba; rail de navegación grafito a la izquierda.",
+      "Archivo de ancho variable (62% a 100%) con cifras tabulares; Martian Mono solo para códigos y medidas.",
+      "Ámbar reactivo racionado; colores por deporte solo en series por deporte.",
+      "Rampa de valor grafito a hueso para zonas de intensidad: más claro es más intenso.",
+      "Esquinas casi rectas (2px a 4px)."
+    ],
+    "rules": [
+      {
+        "name": "The Reagent Rule",
+        "body": "El ámbar solo aparece donde hay un umbral, un techo, algo pendiente del atleta o un Modify. Si no se puede nombrar el umbral, no va ámbar.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sport Hue Rule",
+        "body": "Azul, naranja y verde de deporte solo tiñen datos de ese deporte. Las series no deportivas van en tinta hueso; ATL en violeta es la única excepción.",
+        "section": "colors"
+      },
+      {
+        "name": "The Value Ramp Rule",
+        "body": "Las zonas de intensidad se codifican por valor en la rampa grafito a hueso (más claro = más intenso), nunca con colores de deporte ni con ámbar.",
+        "section": "colors"
+      },
+      {
+        "name": "The Never Color Alone Rule",
+        "body": "Toda decisión o estado lleva ícono y texto además de color (sello con ícono, \"Reglas OK\" con check, impacto con diámetro y etiqueta).",
+        "section": "colors"
+      },
+      {
+        "name": "The Width Carries Weight Rule",
+        "body": "La jerarquía de cifras se arma con el ancho (62% a 78%) y el tamaño, no con color: cuanto más importante la cifra, más condensada.",
+        "section": "typography"
+      },
+      {
+        "name": "The Instrument Mono Rule",
+        "body": "Martian Mono solo para códigos, tiempos y medidas que un instrumento imprimiría. Nunca para títulos, etiquetas o texto.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "Toda cifra comparable usa números tabulares y lining para que las columnas se alineen.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ruled Sheet Rule",
+        "body": "Una sección es una hoja: filete superior fuerte (rule-strong) y cabecera con filete fino, nunca una caja con sombra o fondo elevado. La única variante es el filete ámbar de 2px cuando la hoja contiene lo que espera al atleta.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do abrir cada sección como una hoja con filete superior rule-strong y cabecera con filete fino.",
+      "Do reservar el ámbar reactivo (#e8a93b) para techos, umbrales, lo que espera al atleta y Modify.",
+      "Do codificar zonas de intensidad con la rampa de valor zone-z1 a zone-z6, más claro = más intenso.",
+      "Do poner cifras en Archivo condensado (wdth 62 a 78) con números tabulares.",
+      "Do acompañar todo estado o decisión con ícono y texto, además de color.",
+      "Do usar Martian Mono solo para ids, tiempos de traza, modelos y medidas.",
+      "Do respetar movimiento reducido: el techo y el LED aparecen sin animar."
+    ],
+    "donts": [
+      "Don't armar grillas de tarjetas KPI con acento neón ni estética de app de fitness de consumo.",
+      "Don't usar los colores de deporte (#3987e5, #d95926, #199e70) fuera de datos por deporte, ni para zonas.",
+      "Don't usar ámbar como acento decorativo, de marca o de hover.",
+      "Don't dar sombra o fondo elevado a las hojas; la sombra queda para tooltips, popovers y toasts.",
+      "Don't redondear más de 4px salvo los puntos de datos."
+    ]
+  }
+}

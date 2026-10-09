@@ -1,0 +1,10 @@
+{
+  "id": "ath_001",
+  "name": "Tomás Ferreyra",
+  "age": 36,
+  "weight_kg": 72.0,
+  "ftp_w": 270,
+  "run_threshold_pace_s_per_km": 270,
+  "swim_css_s_per_100m": 100,
+  "lthr_bpm": 168
+}
