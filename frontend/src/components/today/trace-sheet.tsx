@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { Empty, Panel } from "@/components/shared";
 import { useCoach } from "@/lib/store";
@@ -15,7 +17,8 @@ export function TraceSheet() {
 
   const t0 = log[0]?.ts ?? 0;
   return (
-    <Panel id="trace" title="Traza del grafo">
+    <Panel id="trace" title="Traza del grafo"
+      action={<Link href="/observabilidad" className="inline-flex items-center gap-1 text-[13px] text-muted-foreground hover:text-foreground">Llamadas al LLM <ArrowRight className="size-3.5" /></Link>}>
       {log.length === 0 ? (
         <Empty>La traza muestra cada nodo del grafo a medida que corre: router, especialistas, Head Coach, reglas y aprobación.</Empty>
       ) : (

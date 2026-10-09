@@ -1,4 +1,4 @@
-import { Dumbbell, Flag, HeartPulse, type LucideIcon, ShieldCheck, TrendingUp } from "lucide-react";
+import { Apple, Dumbbell, Flag, HeartPulse, type LucideIcon, ShieldCheck, TrendingUp } from "lucide-react";
 
 export interface AgentMeta {
   id: string;
@@ -20,6 +20,7 @@ export const SPECIALISTS: AgentMeta[] = [
     icon: TrendingUp,
     beta: true,
   },
+  { id: "nutrition", name: "Nutrition Agent", role: "Carbohidratos y comidas del día", icon: Apple },
 ];
 
 export const HEAD_COACH: AgentMeta = {
@@ -46,4 +47,7 @@ export const FACTOR_LABELS: Record<string, string> = {
   proximidad_carrera: "Proximidad de carrera",
   progresion_ftp: "Progresión de FTP",
   balance_forma: "Balance de forma",
+  readiness: "Readiness",
+  disponibilidad_energetica: "Disponibilidad energética",
+  recuperacion_nutricional: "Recuperación nutricional",
 };

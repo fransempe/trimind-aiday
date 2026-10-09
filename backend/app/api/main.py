@@ -3,24 +3,37 @@
 import json
 import logging
 from collections.abc import AsyncIterator
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 
-from app.agents import race_strategy
+from app import llm
+from app.agents import knowledge, meal_plan, race_strategy
 from app.agents.registry import REGISTRY
 from app.config import settings
 from app.graph import runner
 from app.models.api import (
+    AgentAskRequest,
+    AgentAskResponse,
     ApprovalRequest,
     AskRequest,
     AskResponse,
     AthleteStateUpdate,
     FeedbackRequest,
 )
+from app.models.knowledge import (
+    KnowledgeBase,
+    KnowledgeContext,
+    KnowledgeRequest,
+    RaceDebrief,
+    RaceDebriefRequest,
+)
 from app.models.metrics import AthleteSnapshot
+from app.models.nutrition import MealPlan, MealPlanRequest
 from app.models.strategy import RaceStrategy, RaceStrategyRequest
+from app.repositories.knowledge_store import set_context
 from app.repositories.mock import list_scenarios
 from app.repositories.state import AthleteState
 
@@ -108,10 +121,79 @@ async def race_strategy_endpoint(req: RaceStrategyRequest) -> RaceStrategy:
     return await race_strategy.generate(req, athlete.data)
 
 
+@app.post("/race/debrief")
+async def race_debrief(req: RaceDebriefRequest) -> RaceDebrief:
+    """Análisis de una carrera completada: tiempos (Garmin o manual) y el relato del atleta."""
+    return await knowledge.debrief(req)
+
+
+# ---------------------------------------------------------------- base de conocimiento
+@app.post("/athlete/knowledge")
+async def athlete_knowledge(req: KnowledgeRequest) -> KnowledgeBase:
+    """Arma la base de conocimiento del atleta y deja su resumen en el contexto de los agentes."""
+    return await knowledge.build_knowledge(req, athlete.data)
+
+
+@app.put("/athlete/knowledge/context")
+def athlete_knowledge_context(req: KnowledgeContext) -> dict:
+    """Restaura el resumen guardado en el navegador (el backend lo pierde al reiniciar)."""
+    set_context(req.text)
+    return {"ok": True}
+
+
+# ---------------------------------------------------------------- nutrición
+@app.post("/nutrition/plan")
+async def nutrition_plan(req: MealPlanRequest) -> MealPlan:
+    """Plan de comidas del Nutrition Agent, coordinado con la decisión y el resto del staff."""
+    return await meal_plan.generate(req, athlete.snapshot())
+
+
 # ---------------------------------------------------------------- ask / feedback
 @app.post("/ask")
 async def ask(req: AskRequest) -> AskResponse:
     return await runner.ask(req.question, athlete.snapshot())
+
+
+@app.post("/agents/{agent}/ask")
+async def ask_agent(agent: str, req: AgentAskRequest) -> AgentAskResponse:
+    """Pregunta directa a un agente. Al Head Coach se le pregunta con su equipo detrás."""
+    snap = athlete.snapshot()
+    if agent == "head_coach":
+        res = await runner.ask(req.question, snap)
+        model = settings.coach_model if settings.llm_mode == "live" else "fake"
+        return AgentAskResponse(agent=agent, answer=res.answer, model=model, consulted_agents=res.consulted_agents)
+    if agent not in REGISTRY:
+        raise HTTPException(404, f"No existe el agente {agent}")
+    answer, model = await REGISTRY[agent].answer(snap, req.question, req.context)
+    return AgentAskResponse(agent=agent, answer=answer, model=model)
+
+
+# ---------------------------------------------------------------- observabilidad
+EVALS = Path(__file__).resolve().parents[2] / "evals" / "results.json"
+
+
+@app.get("/observability")
+def observability() -> dict:
+    """Cada llamada al LLM (agente, modelo, latencia, tokens, caché, fallback) y el último eval."""
+    data = llm.calls_summary()
+    try:
+        data["evals"] = json.loads(EVALS.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        data["evals"] = None
+    data["config"] = {
+        "llm_mode": settings.llm_mode,
+        "specialist_model": settings.specialist_model,
+        "coach_model": settings.coach_model,
+        "fallback_model": settings.fallback_model,
+        "cache": settings.llm_cache,
+    }
+    return data
+
+
+@app.delete("/observability/cache")
+def clear_llm_cache() -> dict:
+    """Vacía la caché de respuestas del LLM (la próxima corrida vuelve a llamar al modelo)."""
+    return {"cleared": llm.clear_cache()}
 
 
 @app.post("/feedback")

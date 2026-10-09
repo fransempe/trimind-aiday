@@ -42,3 +42,16 @@ class AskResponse(BaseModel):
     answer: str
     consulted_agents: list[str]
     opinions: list[AgentOpinion]
+
+
+class AgentAskRequest(BaseModel):
+    question: str = Field(min_length=3)
+    # Lo que la pantalla sabe y el backend no (ej. el plan de comidas o las condiciones alimentarias).
+    context: dict = Field(default_factory=dict)
+
+
+class AgentAskResponse(BaseModel):
+    agent: str
+    answer: str
+    model: str
+    consulted_agents: list[str] = Field(default_factory=list)

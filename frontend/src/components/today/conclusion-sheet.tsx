@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { WorkoutSteps } from "@/components/workout-profile";
 import { intensityCeiling } from "@/lib/ceiling";
 import { formatDuration } from "@/lib/engine";
+import { SPECIALISTS } from "@/lib/agents";
 import { useCoach } from "@/lib/store";
 
 function DecisionWord() {
@@ -25,12 +26,12 @@ function DecisionWord() {
         {runStatus === "running" ? (
           <p className="flex items-center gap-2 text-[15px] text-muted-foreground" aria-live="polite">
             <Loader2 className="size-4 animate-spin text-reagent" />
-            {done} de 4 especialistas listos. El Head Coach decide cuando terminen todos.
+            {done} de {SPECIALISTS.length} especialistas listos. El Head Coach decide cuando terminen todos.
           </p>
         ) : (
           <>
             <p className="max-w-[52ch] text-[15px] text-muted-foreground">
-              Tocá <span className="font-semibold text-foreground">Ask Coaching Team</span> en la banda superior: cuatro
+              Tocá <span className="font-semibold text-foreground">Ask Coaching Team</span> en la banda superior: cinco
               especialistas opinan en paralelo y el Head Coach decide si mantener, modificar o descansar.
             </p>
           </>

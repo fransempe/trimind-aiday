@@ -1,8 +1,9 @@
 "use client";
 
-import { ArrowRight, ChevronDown, Moon, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronDown, Moon, PlayCircle, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { ExerciseDemo } from "@/components/exercise-demo";
 import { BAND_META, DecisionBadge, Empty, SPORT_META } from "@/components/shared";
 import { Approval } from "@/components/today/conclusion-sheet";
 import { SPORT_ICON } from "@/components/today/session-meta";
@@ -18,29 +19,41 @@ import { cn } from "@/lib/utils";
 import type { Workout } from "@/lib/types";
 
 export function ExerciseList({ exercises, compact }: { exercises: Exercise[]; compact?: boolean }) {
+  const [demo, setDemo] = useState<Exercise | null>(null);
   return (
-    <table className={cn("mt-3 w-full max-w-2xl", compact ? "text-[13px]" : "text-[14px]")}>
-      <caption className="sr-only">Ejercicios</caption>
-      <thead>
-        <tr className="text-left text-[12px] font-semibold uppercase tracking-[0.05em] text-muted-foreground [font-stretch:80%]">
-          <th className="pr-3 pb-1.5 font-semibold">Ejercicio</th>
-          <th className="pr-3 pb-1.5 font-semibold">Series × reps</th>
-          <th className="pb-1.5 text-right font-semibold">Descanso</th>
-        </tr>
-      </thead>
-      <tbody>
-        {exercises.map((e) => (
-          <tr key={e.name} className="border-t border-rule align-top">
-            <td className="py-2 pr-3">
-              <span className="font-medium">{e.name}</span>
-              {e.cue && !compact && <span className="block text-[13px] text-muted-foreground">{e.cue}</span>}
-            </td>
-            <td className="num py-2 pr-3 whitespace-nowrap">{e.dose}</td>
-            <td className="num py-2 text-right whitespace-nowrap text-muted-foreground">{e.rest ?? "—"}</td>
+    <>
+      <table className={cn("mt-3 w-full max-w-2xl", compact ? "text-[13px]" : "text-[14px]")}>
+        <caption className="sr-only">Ejercicios</caption>
+        <thead>
+          <tr className="text-left text-[12px] font-semibold uppercase tracking-[0.05em] text-muted-foreground [font-stretch:80%]">
+            <th className="pr-3 pb-1.5 font-semibold">Ejercicio</th>
+            <th className="pr-3 pb-1.5 font-semibold">Series × reps</th>
+            <th className="hidden pr-3 pb-1.5 text-right font-semibold sm:table-cell">Descanso</th>
+            <th className="pb-1.5"><span className="sr-only">Demo</span></th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {exercises.map((e) => (
+            <tr key={e.name} className="border-t border-rule align-top">
+              <td className="py-2 pr-3">
+                <span className="font-medium">{e.name}</span>
+                {e.cue && !compact && <span className="block text-[13px] text-muted-foreground">{e.cue}</span>}
+              </td>
+              <td className="num py-2 pr-3 whitespace-nowrap">{e.dose}</td>
+              <td className="num hidden py-2 pr-3 text-right whitespace-nowrap text-muted-foreground sm:table-cell">{e.rest ?? "—"}</td>
+              <td className="py-1.5 text-right">
+                <button type="button" onClick={() => setDemo(e)} aria-label={`Ver cómo se hace ${e.name}`}
+                  className="inline-flex items-center gap-1 rounded-[3px] px-1.5 py-0.5 text-[13px] text-muted-foreground hover:bg-foreground/5 hover:text-foreground">
+                  <PlayCircle className="size-4" strokeWidth={1.75} />
+                  {!compact && <span className="hidden sm:inline">Ver</span>}
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <ExerciseDemo exercise={demo} onOpenChange={(o) => !o && setDemo(null)} />
+    </>
   );
 }
 

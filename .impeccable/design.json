@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-08T15:05:11.351Z",
+  "generatedAt": "2026-10-09T19:02:31.000Z",
   "title": "Design System: TriMind AI",
   "extensions": {
     "colorMeta": {
@@ -511,7 +511,11 @@
       },
       "reading-xl": {
         "displayName": "Reading XL",
-        "purpose": "Cifra protagonista de una hoja: readiness score, D-7."
+        "purpose": "Cifra protagonista de una hoja: readiness score, D-7; a menor tamaño, la hora de cada franja en Today y el D-N del rail."
+      },
+      "section-title": {
+        "displayName": "Section title",
+        "purpose": "Título de hoja lateral, de \"Resultados de la IA\" y de Semana / Mes."
       },
       "title-lead": {
         "displayName": "Title lead",
@@ -535,7 +539,11 @@
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Encabezados de columna y rótulos de dato en mayúsculas."
+        "purpose": "Rótulos de dato en mayúsculas (taper, series de gráfico)."
+      },
+      "table-head": {
+        "displayName": "Table head",
+        "purpose": "Encabezados de columna de todas las tablas y días del Mes."
       },
       "band-label": {
         "displayName": "Band label",
@@ -543,14 +551,19 @@
       },
       "code": {
         "displayName": "Code",
-        "purpose": "Ids de corrida, tiempos de traza, modelos y medidas."
+        "purpose": "Ids de corrida, tiempos de traza, nombres de modelo, latencia y medidas."
       }
     },
     "shadows": [
       {
         "name": "floating-layer",
         "value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
-        "purpose": "Solo tooltips de gráficos, popovers y toasts. Las hojas no llevan sombra."
+        "purpose": "Tooltips de gráficos, popovers y toasts. Las hojas no llevan sombra."
+      },
+      {
+        "name": "modal-layer",
+        "value": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+        "purpose": "Solo la hoja lateral y el modal de ejercicio, sobre velo negro al 60%."
       }
     ],
     "motion": [
@@ -578,12 +591,36 @@
         "name": "led-ping",
         "value": "1s cubic-bezier(0, 0, 0.2, 1) infinite",
         "purpose": "Pulso del LED de dispositivo conectado; se apaga con movimiento reducido."
+      },
+      {
+        "name": "side-sheet-slide",
+        "value": "slide-in-from-right / slide-out-to-right (tw-animate-css)",
+        "purpose": "Entrada y salida de la hoja lateral; el velo hace fade."
+      },
+      {
+        "name": "modal-zoom",
+        "value": "fade-in + zoom-in-95 (tw-animate-css)",
+        "purpose": "Apertura del modal de ejercicio."
+      },
+      {
+        "name": "chevron-rotate",
+        "value": "transform 150ms",
+        "purpose": "Chevron de bloque colapsable que gira 180 grados al abrir."
+      },
+      {
+        "name": "next-race-toast",
+        "value": "delay 900ms, duration 6000ms",
+        "purpose": "Aviso de próxima carrera, una vez por sesión del navegador."
       }
     ],
     "breakpoints": [
       {
         "name": "sm",
         "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
       },
       {
         "name": "lg",
@@ -611,6 +648,14 @@
       "description": "Acción alternativa: mantener plan, desconectar, sincronizar.",
       "html": "<button class=\"ds-btn-outline\">Mantener plan</button>",
       "css": ".ds-btn-outline{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--input,#3a4046);border-radius:4px;background:color-mix(in oklab,#3a4046 30%,transparent);color:var(--foreground,#ece7db);font:500 14px Archivo,sans-serif;cursor:pointer;transition:background .15s}.ds-btn-outline:hover{background:color-mix(in oklab,#3a4046 50%,transparent)}.ds-btn-outline:focus-visible{outline:2px solid var(--reagent,#e8a93b);outline-offset:2px}.ds-btn-outline:active{transform:translateY(1px)}"
+    },
+    {
+      "name": "Botón ghost",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Acción de baja jerarquía o reversible: No la hice, Deshacer, Vaciar caché.",
+      "html": "<button class=\"ds-btn-ghost\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/></svg>Deshacer</button>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 10px;border:1px solid transparent;border-radius:3px;background:transparent;color:var(--muted-foreground,#a39d91);font:500 0.8rem Archivo,sans-serif;cursor:pointer;transition:background .15s,color .15s}.ds-btn-ghost:hover{background:color-mix(in oklab,#1d2125 50%,transparent);color:#ece7db}.ds-btn-ghost:focus-visible{outline:2px solid var(--reagent,#e8a93b);outline-offset:2px}.ds-btn-ghost:active{transform:translateY(1px)}"
     },
     {
       "name": "Banda de protocolo",
@@ -675,23 +720,72 @@
       "description": "Estado de conexión fijado por el usuario: verde con pulso si está conectado, tenue si no.",
       "html": "<span class=\"ds-led-row\"><span class=\"ds-led is-on\"></span>Garmin Connect</span> <span class=\"ds-led-row\"><span class=\"ds-led\"></span>Wahoo</span>",
       "css": ".ds-led-row{display:inline-flex;align-items:center;gap:8px;font:600 13px Archivo,sans-serif;color:#ece7db;margin-right:16px}.ds-led{position:relative;display:inline-block;width:10px;height:10px;border-radius:50%;background:#8c867c}.ds-led.is-on{background:#4cb874}.ds-led.is-on::before{content:'';position:absolute;inset:0;border-radius:50%;background:#4cb874;opacity:.6;animation:ds-ping 1s cubic-bezier(0,0,.2,1) infinite}@keyframes ds-ping{75%,100%{transform:scale(2);opacity:0}}@media (prefers-reduced-motion:reduce){.ds-led.is-on::before{display:none}}"
+    },
+    {
+      "name": "Hoja lateral",
+      "kind": "card",
+      "refersTo": "side-sheet",
+      "description": "Detalle a pedido desde la derecha: resultado de carrera, estrategia con IA.",
+      "html": "<aside class=\"ds-side\"><button class=\"ds-side-x\" aria-label=\"Cerrar\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></button><h2>IRONMAN 70.3 Buenos Aires</h2><p class=\"ds-side-desc\">Triatlón · 70.3 · D-7</p><section><h3>Tiempos</h3><p class=\"ds-side-row\">Natación 1.9 km <b>34:12</b></p><p class=\"ds-side-row\">Ciclismo 90 km <b>2:41:05</b></p></section><p class=\"ds-side-foot\">Pautas generales; no reemplazan a un profesional.</p></aside>",
+      "css": ".ds-side{position:relative;max-width:768px;padding:24px 32px;background:var(--background,#0f1113);color:#ece7db;border-left:1px solid var(--rule-strong,#40464d);box-shadow:0 25px 50px -12px rgb(0 0 0/.25);font-family:Archivo,sans-serif}.ds-side h2{margin:0;padding-right:40px;font-size:24px;font-weight:700;font-stretch:80%;line-height:1.1}.ds-side-desc{margin:4px 0 0;font-size:14px;color:#a39d91}.ds-side section{margin-top:24px}.ds-side h3{margin:0 0 8px;font-size:15px;font-weight:600}.ds-side-row{display:flex;justify-content:space-between;margin:0;padding:8px 0;border-top:1px solid #2a2e33;font-size:14px}.ds-side-row b{font-weight:600;font-stretch:78%;font-variant-numeric:tabular-nums}.ds-side-foot{margin:32px 0 0;font-size:12px;color:#a39d91}.ds-side-x{position:absolute;top:16px;right:16px;padding:6px;border:0;border-radius:3px;background:none;color:#a39d91;cursor:pointer}.ds-side-x:hover{color:#ece7db}.ds-side-x:focus-visible{outline:2px solid var(--reagent,#e8a93b);outline-offset:2px}"
+    },
+    {
+      "name": "Chat con agente",
+      "kind": "custom",
+      "refersTo": "chat-bubble-agent",
+      "description": "Hoja \"Preguntale a tu agente\": burbuja hueso del atleta, respuesta con filete, modelo en mono.",
+      "html": "<section class=\"ds-chat\"><div class=\"ds-chat-head\">Preguntale a tu Race Agent</div><p class=\"ds-chat-user\">¿Cómo encaro la bici en la carrera?</p><div class=\"ds-chat-agent\"><p class=\"ds-chat-who\">Race Agent <span>· consultó a Training Agent</span></p><p class=\"ds-chat-bubble\">Salí al 72% del FTP los primeros 20 km y no pases de 205 W en las subidas.</p><p class=\"ds-chat-model\">gpt-4o-mini</p></div><p class=\"ds-chat-busy\">Race Agent está pensando…</p></section>",
+      "css": ".ds-chat{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--rule-strong,#40464d);font-family:Archivo,sans-serif;color:#ece7db}.ds-chat-head{min-height:48px;display:flex;align-items:center;border-bottom:1px solid #2a2e33;font-size:15px;font-weight:600}.ds-chat-user{align-self:flex-end;max-width:85%;margin:0;padding:8px 14px;border-radius:3px;background:var(--primary,#ece7db);color:#15181b;font-size:14px}.ds-chat-agent{max-width:92%}.ds-chat-who{margin:0;font-size:12px;font-weight:600;color:#a39d91}.ds-chat-who span{font-weight:400}.ds-chat-bubble{margin:4px 0 0;padding:10px 14px;border:1px solid #2a2e33;border-radius:3px;font-size:14px;line-height:1.625}.ds-chat-model{margin:4px 0 0;font:0.72rem 'Martian Mono',monospace;color:var(--faint,#8c867c)}.ds-chat-busy{margin:0;font-size:13px;color:var(--reagent,#e8a93b)}"
+    },
+    {
+      "name": "Bloque generado por IA",
+      "kind": "custom",
+      "refersTo": "code",
+      "description": "Contenido de un modelo: autor arriba, listas con filete, modelo en mono tenue al pie.",
+      "html": "<section class=\"ds-ai\"><p class=\"ds-ai-by\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72\"/><path d=\"m14 7 3 3\"/></svg>Análisis del Race Agent</p><p class=\"ds-ai-sum\">Ritmo parejo en la bici y un run por debajo del objetivo por calor.</p><h4>Para mejorar</h4><ul><li>Bajar 5 W el primer tercio de la bici.</li><li>Sumar sodio desde el km 40.</li></ul><p class=\"ds-ai-model\">claude-sonnet-4-5</p><button class=\"ds-ai-btn\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72\"/><path d=\"m14 7 3 3\"/></svg>Regenerar con IA</button></section>",
+      "css": ".ds-ai{border-top:2px solid var(--rule-strong,#40464d);padding-top:20px;font-family:Archivo,sans-serif;color:#ece7db}.ds-ai-by{display:flex;align-items:center;gap:6px;margin:0;font-size:13px;font-weight:600;color:#ece7db}.ds-ai-sum{margin:16px 0;font-size:16px;line-height:1.625}.ds-ai h4{margin:0 0 6px;font-size:14px;font-weight:600}.ds-ai ul{margin:0;padding:0;list-style:none;font-size:14px}.ds-ai li{padding:6px 0;border-top:1px solid #2a2e33}.ds-ai li:first-child{border-top:0}.ds-ai-model{margin:16px 0;font:0.72rem 'Martian Mono',monospace;color:var(--faint,#8c867c)}.ds-ai-btn{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid #3a4046;border-radius:4px;background:color-mix(in oklab,#3a4046 30%,transparent);color:#ece7db;font:500 14px Archivo,sans-serif;cursor:pointer}.ds-ai-btn:hover{background:color-mix(in oklab,#3a4046 50%,transparent)}.ds-ai-btn:focus-visible{outline:2px solid var(--reagent,#e8a93b);outline-offset:2px}"
+    },
+    {
+      "name": "Etiqueta de estado",
+      "kind": "chip",
+      "refersTo": "status-tag",
+      "description": "Tag 11px con borde y texto del tono: ok, para completar, fallback, error, caché.",
+      "html": "<span class=\"ds-tag ds-tag-good\">ok</span> <span class=\"ds-tag ds-tag-reagent\">Para completar</span> <span class=\"ds-tag ds-tag-critical\">timeout</span> <span class=\"ds-tag ds-tag-muted\">caché</span>",
+      "css": ".ds-tag{display:inline-block;padding:2px 6px;border:1px solid;border-radius:3px;font:600 11px Archivo,sans-serif;margin-right:4px}.ds-tag-good{color:#4cb874;border-color:color-mix(in oklab,#4cb874 50%,transparent)}.ds-tag-reagent{color:#e8a93b;border-color:color-mix(in oklab,#e8a93b 60%,transparent)}.ds-tag-critical{color:#e5534b;border-color:color-mix(in oklab,#e5534b 60%,transparent)}.ds-tag-muted{color:#a39d91;border-color:#2a2e33}"
+    },
+    {
+      "name": "Estado de sesión",
+      "kind": "custom",
+      "refersTo": "good",
+      "description": "Pendiente con acciones, o hecha / no realizada con ícono, texto y Deshacer.",
+      "html": "<div class=\"ds-status\"><span class=\"ds-status-pend\"><i></i>Pendiente</span><button class=\"ds-status-p\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>La hice</button><button class=\"ds-status-o\">Sincronizar Garmin</button></div><div class=\"ds-status\"><span class=\"ds-status-done\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>Hecha · marcada a mano</span></div>",
+      "css": ".ds-status{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;font-family:Archivo,sans-serif}.ds-status-pend{display:inline-flex;align-items:center;gap:6px;margin-right:4px;font-size:13px;color:#a39d91}.ds-status-pend i{width:11px;height:11px;border:1.5px dashed currentColor;border-radius:50%}.ds-status-done{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#4cb874}.ds-status-p,.ds-status-o{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 10px;border-radius:3px;font:500 0.8rem Archivo,sans-serif;cursor:pointer}.ds-status-p{border:1px solid transparent;background:#ece7db;color:#15181b}.ds-status-p:hover{background:color-mix(in oklab,#ece7db 80%,transparent)}.ds-status-o{border:1px solid #3a4046;background:color-mix(in oklab,#3a4046 30%,transparent);color:#ece7db}.ds-status-o:hover{background:color-mix(in oklab,#3a4046 50%,transparent)}.ds-status-p:focus-visible,.ds-status-o:focus-visible{outline:2px solid var(--reagent,#e8a93b);outline-offset:2px}"
+    },
+    {
+      "name": "Toast",
+      "kind": "custom",
+      "refersTo": "toast",
+      "description": "Confirma lo que pasa fuera de la vista: sync, importación, agenda, base de conocimiento.",
+      "html": "<div class=\"ds-toast\"><b>Garmin Connect sincronizó tu sesión de las 07:00</b><span>Fondo Z2 · 90 min</span></div>",
+      "css": ".ds-toast{display:flex;flex-direction:column;gap:2px;width:340px;padding:14px 16px;border:1px solid var(--border,#2a2e33);border-radius:4px;background:var(--popover,#1b1f23);color:#ece7db;box-shadow:0 20px 25px -5px rgb(0 0 0/.1),0 8px 10px -6px rgb(0 0 0/.1);font-family:Archivo,sans-serif}.ds-toast b{font-size:13px;font-weight:600}.ds-toast span{font-size:13px;color:#a39d91}"
     }
   ],
   "narrative": {
     "northStar": "Protocolo de laboratorio",
-    "overview": "Cada pantalla es una hoja de un informe de laboratorio de rendimiento deportivo, apoyada sobre una mesa de luz grafito. No hay tarjetas: hay hojas separadas por filetes finos, con una cabecera de protocolo impresa en banda hueso, lecturas por estación en franjas tabulares y una conclusión firmada por el Head Coach. La densidad es de planilla: cifras tabulares, columnas alineadas, etiquetas cortas.\n\nLa tipografía hace el trabajo de jerarquía. Archivo cambia de ancho según el rol: muy condensada para la decisión y las cifras grandes, condensada para lecturas y etiquetas, normal para el texto corrido. Martian Mono aparece solo donde un instrumento imprimiría un código: ids de corrida, tiempos de la traza, nombres de modelo y medidas. El color está racionado: tinta hueso para casi todo, gris cálido para lo secundario, ámbar reactivo solo para el umbral y lo que espera al atleta, y los tres colores por deporte solo sobre datos de ese deporte.\n\nEl movimiento distintivo es el techo de intensidad: una línea ámbar que se dibuja una sola vez cuando llega la decisión, tacha en rojo lo que del plan original la cruza y deja pasar por debajo el ajuste en la rampa de valor. Lo que el sistema rechaza explícitamente: la grilla de tarjetas KPI con acento neón y la estética de app de fitness de consumo.",
+    "overview": "Cada pantalla es una hoja de un informe de laboratorio de rendimiento deportivo, apoyada sobre una mesa de luz grafito. No hay tarjetas: hay hojas separadas por filetes finos, con una cabecera de protocolo impresa en banda hueso, lecturas por estación en franjas tabulares y una conclusión firmada por el Head Coach. La densidad es de planilla: cifras tabulares, columnas alineadas, etiquetas cortas. Las superficies nuevas (Today por franjas, Nutrición, Race, Base de conocimiento, Observabilidad) siguen la misma gramática: listas con filete entre filas, franjas de lecturas y hojas laterales para el detalle.\n\nLa tipografía hace el trabajo de jerarquía. Archivo cambia de ancho según el rol: muy condensada para la decisión y las cifras grandes, condensada para lecturas y etiquetas, normal para el texto corrido. Martian Mono aparece solo donde un instrumento imprimiría un código: ids de corrida, tiempos de la traza, nombres de modelo y medidas. El color está racionado: tinta hueso para casi todo, gris cálido para lo secundario, ámbar reactivo solo para el umbral y lo que espera al atleta, y los tres colores por deporte solo sobre datos de ese deporte.\n\nEl movimiento distintivo es el techo de intensidad: una línea ámbar que se dibuja una sola vez cuando llega la decisión, tacha en rojo lo que del plan original la cruza y deja pasar por debajo el ajuste en la rampa de valor. Lo que el sistema rechaza explícitamente: la grilla de tarjetas KPI con acento neón y la estética de app de fitness de consumo.",
     "keyCharacteristics": [
       "Mesa grafito, hojas con filete superior, sin tarjetas ni sombras de reposo.",
       "Banda de protocolo hueso con tinta grafito arriba; rail de navegación grafito a la izquierda.",
       "Archivo de ancho variable (62% a 100%) con cifras tabulares; Martian Mono solo para códigos y medidas.",
       "Ámbar reactivo racionado; colores por deporte solo en series por deporte.",
       "Rampa de valor grafito a hueso para zonas de intensidad: más claro es más intenso.",
-      "Esquinas casi rectas (2px a 4px)."
+      "Esquinas casi rectas (2px a 4px).",
+      "El detalle se abre a pedido: filas colapsables y hojas laterales, nunca páginas de detalle nuevas."
     ],
     "rules": [
       {
         "name": "The Reagent Rule",
-        "body": "El ámbar solo aparece donde hay un umbral, un techo, algo pendiente del atleta o un Modify. Si no se puede nombrar el umbral, no va ámbar.",
+        "body": "El ámbar solo aparece donde hay un umbral, un techo, algo pendiente del atleta o en curso para él, o un Modify. Si no se puede nombrar el umbral o la espera, no va ámbar: un resultado de IA ya entregado no es una espera.",
         "section": "colors"
       },
       {
@@ -706,12 +800,12 @@
       },
       {
         "name": "The Never Color Alone Rule",
-        "body": "Toda decisión o estado lleva ícono y texto además de color (sello con ícono, \"Reglas OK\" con check, impacto con diámetro y etiqueta).",
+        "body": "Toda decisión o estado lleva ícono y texto además de color (sello con ícono, \"Reglas OK\" con check, estado de sesión con check, círculo punteado o cruz, impacto con diámetro y etiqueta).",
         "section": "colors"
       },
       {
         "name": "The Width Carries Weight Rule",
-        "body": "La jerarquía de cifras se arma con el ancho (62% a 78%) y el tamaño, no con color: cuanto más importante la cifra, más condensada.",
+        "body": "La jerarquía de cifras se arma con el ancho (62% a 80%) y el tamaño, no con color: cuanto más importante la cifra, más condensada.",
         "section": "typography"
       },
       {
@@ -726,24 +820,26 @@
       },
       {
         "name": "The Ruled Sheet Rule",
-        "body": "Una sección es una hoja: filete superior fuerte (rule-strong) y cabecera con filete fino, nunca una caja con sombra o fondo elevado. La única variante es el filete ámbar de 2px cuando la hoja contiene lo que espera al atleta.",
+        "body": "Una sección es una hoja: filete superior fuerte (rule-strong) y cabecera con filete fino, nunca una caja con sombra o fondo elevado. Las variantes son el filete ámbar de 2px cuando la hoja contiene lo que espera al atleta, el filete fuerte de 2px que abre un tramo mayor (nutrición del día, \"Resultados de la IA\", el análisis dentro de una hoja lateral) y el filete de 2px en color de deporte que abre una columna de esa disciplina.",
         "section": "elevation"
       }
     ],
     "dos": [
       "Do abrir cada sección como una hoja con filete superior rule-strong y cabecera con filete fino.",
-      "Do reservar el ámbar reactivo (#e8a93b) para techos, umbrales, lo que espera al atleta y Modify.",
+      "Do reservar el ámbar reactivo (#e8a93b) para techos, umbrales, lo que espera al atleta o está en curso para él, y Modify.",
       "Do codificar zonas de intensidad con la rampa de valor zone-z1 a zone-z6, más claro = más intenso.",
-      "Do poner cifras en Archivo condensado (wdth 62 a 78) con números tabulares.",
+      "Do poner cifras en Archivo condensado (wdth 62 a 80) con números tabulares.",
       "Do acompañar todo estado o decisión con ícono y texto, además de color.",
       "Do usar Martian Mono solo para ids, tiempos de traza, modelos y medidas.",
+      "Do firmar todo contenido generado por IA con su agente y cerrar con el nombre del modelo en mono tenue.",
+      "Do abrir el detalle en una fila colapsable o en una hoja lateral, y confirmar con un toast lo que pasa fuera de la vista.",
       "Do respetar movimiento reducido: el techo y el LED aparecen sin animar."
     ],
     "donts": [
       "Don't armar grillas de tarjetas KPI con acento neón ni estética de app de fitness de consumo.",
       "Don't usar los colores de deporte (#3987e5, #d95926, #199e70) fuera de datos por deporte, ni para zonas.",
-      "Don't usar ámbar como acento decorativo, de marca o de hover.",
-      "Don't dar sombra o fondo elevado a las hojas; la sombra queda para tooltips, popovers y toasts.",
+      "Don't usar ámbar como acento decorativo, de marca, de hover o para rotular un resultado de IA ya entregado.",
+      "Don't dar sombra o fondo elevado a las hojas; la sombra queda para tooltips, popovers, toasts, la hoja lateral y el modal.",
       "Don't redondear más de 4px salvo los puntos de datos."
     ]
   }

@@ -84,8 +84,8 @@ def main() -> None:
 
     athlete = {
         "id": "ath_001",
-        "name": "Tomás Ferreyra",
-        "age": 36,
+        "name": "Francisco Sempé",
+        "age": 39,
         "weight_kg": 72.0,
         "ftp_w": FTP,
         "run_threshold_pace_s_per_km": 270,

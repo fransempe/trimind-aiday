@@ -10,7 +10,7 @@ from datetime import timedelta
 
 from app.agents.base import COMMON_RULES
 from app.config import settings
-from app.llm import LLMError, structured, to_json
+from app.llm import LLMError, record_heuristic, structured, to_json
 from app.models.strategy import (
     Pacing,
     RaceStrategy,
@@ -120,11 +120,12 @@ async def generate(req: RaceStrategyRequest, data: AthleteData) -> RaceStrategy:
     if settings.llm_mode == "live":
         user = f"Carrera:\n{to_json(req)}\n\nEntrenamiento reciente:\n{to_json(t)}"
         try:
-            result = await structured(RaceStrategyDraft, SYSTEM, user, settings.coach_model)
+            result = await structured(RaceStrategyDraft, SYSTEM, user, settings.coach_model, label="race · estrategia")
             if len(result.value.segment_notes) == len(req.segments):
                 draft, model = result.value, result.model
         except LLMError as e:
             log.error("Estrategia heurística por error del LLM: %s", e)
+            record_heuristic("race · estrategia")
     if draft is None:
         draft = heuristic_draft(req, t)
         model = "fake" if settings.llm_mode == "fake" else "heuristic-fallback"

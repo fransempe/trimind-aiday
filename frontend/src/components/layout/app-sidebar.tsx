@@ -1,9 +1,10 @@
 "use client";
 
-import { Activity, DatabaseZap, Flag, Gauge, HeartPulse, House, Microscope, Settings, TrendingUp, User } from "lucide-react";
+import { Activity, Apple, BookOpen, DatabaseZap, Radar, Flag, Gauge, HeartPulse, House, Microscope, Settings, TrendingUp, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DeviceLed } from "@/components/device-led";
+import { NextRaceCard, NextRaceToast } from "@/components/layout/next-race";
 import { connectedProviders, PROVIDER_META, useSetup } from "@/lib/setup";
 import { cn } from "@/lib/utils";
 
@@ -15,8 +16,11 @@ const NAV = [
   { href: "/performance", label: "Performance", icon: TrendingUp },
   { href: "/recovery", label: "Recovery", icon: HeartPulse },
   { href: "/race", label: "Race", icon: Flag },
+  { href: "/nutricion", label: "Nutrición", icon: Apple },
   { href: "/athlete", label: "Athlete", icon: User },
+  { href: "/conocimiento", label: "Base de conocimiento", icon: BookOpen },
   { href: "/datos", label: "Datos importados", icon: DatabaseZap },
+  { href: "/observabilidad", label: "Observabilidad", icon: Radar },
   { href: "/configuracion", label: "Configuración", icon: Settings },
 ];
 
@@ -57,7 +61,8 @@ export function AppSidebar() {
   const nav = useNav();
   return (
     <>
-      <aside className="sticky top-0 hidden h-dvh w-56 shrink-0 flex-col border-r border-sidebar-border bg-sidebar px-4 py-5 lg:flex">
+      <NextRaceToast />
+      <aside className="sticky top-0 hidden h-dvh w-56 shrink-0 flex-col overflow-y-auto border-r border-sidebar-border bg-sidebar px-4 py-5 lg:flex">
         <Wordmark />
         <nav className="mt-9 flex flex-col">
           {nav.map(({ href, label, icon: Icon }) => {
@@ -68,7 +73,7 @@ export function AppSidebar() {
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "group flex items-center gap-3 border-t border-sidebar-border py-2.5 text-[14px] text-muted-foreground transition-colors last:border-b hover:text-foreground",
+                  "group flex items-center gap-3 border-t border-sidebar-border py-2 text-[14px] text-muted-foreground transition-colors last:border-b hover:text-foreground",
                   active && "text-foreground",
                 )}
               >
@@ -79,10 +84,11 @@ export function AppSidebar() {
             );
           })}
         </nav>
-        <div className="mt-auto space-y-4">
+        <div className="mt-auto space-y-4 pt-6">
+          <NextRaceCard />
           <DevicesStatus />
           <p className="text-[12px] leading-relaxed text-muted-foreground">
-            4 especialistas y un Head Coach. Apoyo al entrenamiento, no diagnóstico médico.
+            5 especialistas y un Head Coach. Apoyo al entrenamiento, no diagnóstico médico.
           </p>
         </div>
       </aside>

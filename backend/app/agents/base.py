@@ -3,10 +3,13 @@ import logging
 import random
 from abc import ABC, abstractmethod
 
+from pydantic import BaseModel, ConfigDict, Field
+
 from app.config import settings
-from app.llm import LLMError, structured, to_json
+from app.llm import LLMError, record_heuristic, structured, to_json
 from app.models.metrics import AthleteSnapshot
 from app.models.opinions import AgentOpinion, AgentOpinionDraft
+from app.repositories.knowledge_store import get_context
 
 log = logging.getLogger(__name__)
 
@@ -62,14 +65,17 @@ class Specialist(ABC):
                 latency_ms=int(delay * 1000),
             )
         user = f"Contexto del atleta hoy:\n{to_json(self.context(snap))}"
+        if get_context():
+            user += f"\n\nLo que el staff ya sabe del atleta:\n{get_context()}"
         if question:
             user += f"\n\nPregunta del atleta: {question}"
         try:
             result = await structured(
-                AgentOpinionDraft, self.system_prompt(), user, settings.specialist_model
+                AgentOpinionDraft, self.system_prompt(), user, settings.specialist_model, label=self.name
             )
         except LLMError as e:
             log.error("%s usa heurística por error del LLM: %s", self.name, e)
+            record_heuristic(self.name)
             return AgentOpinion(
                 **self.heuristic(snap).model_dump(), agent=self.name, model="heuristic-fallback"
             )
@@ -79,6 +85,38 @@ class Specialist(ABC):
             model=result.model,
             latency_ms=result.latency_ms,
         )
+
+
+    async def answer(self, snap: AthleteSnapshot, question: str, extra: dict | None = None) -> tuple[str, str]:
+        """Respuesta directa del especialista a una pregunta del atleta: (texto, modelo)."""
+        if settings.llm_mode == "live":
+            system = (
+                f"{self.role_prompt}\n{COMMON_RULES}\n"
+                "El atleta te pregunta directamente a vos. Respondé en 2 a 5 frases, desde tu área, "
+                "citando los números del contexto. Si la pregunta es médica, recomendá consultar a un "
+                'profesional. Respondé SOLO con un JSON: {"answer": "..."}'
+            )
+            user = f"Contexto del atleta hoy:\n{to_json(self.context(snap))}"
+            if get_context():
+                user += f"\n\nLo que el staff ya sabe del atleta:\n{get_context()}"
+            if extra:
+                user += f"\n\nContexto adicional:\n{to_json(extra)}"
+            user += f"\n\nPregunta: {question}"
+            try:
+                result = await structured(DirectAnswer, system, user, settings.specialist_model, label=f"{self.name} · pregunta")
+                return result.value.answer, result.model
+            except LLMError as e:
+                log.error("%s responde con heurística por error del LLM: %s", self.name, e)
+                record_heuristic(f"{self.name} · pregunta")
+        obs = self.heuristic(snap).observations
+        model = "fake" if settings.llm_mode == "fake" else "heuristic-fallback"
+        return " ".join(obs[:3]), model
+
+
+class DirectAnswer(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    answer: str = Field(min_length=1)
 
 
 def fmt_sleep(hours: float) -> str:

@@ -28,6 +28,15 @@ export const PROVIDER_META: Record<Provider, { label: string; imports: string }>
   wahoo: { label: "Wahoo", imports: "Sesiones de bici con potencia" },
 };
 
+/** Condiciones alimentarias que adaptan el plan de comidas (no es indicación médica). */
+export type DietCondition = "celiaquia" | "lactosa" | "diabetes" | "vegetariano";
+export const CONDITION_META: Record<DietCondition, { label: string; badge: string }> = {
+  celiaquia: { label: "Celiaquía", badge: "Sin TACC" },
+  lactosa: { label: "Intolerancia a la lactosa", badge: "Sin lactosa" },
+  diabetes: { label: "Diabetes", badge: "Carbohidratos parejos" },
+  vegetariano: { label: "Vegetariano", badge: "Sin carne" },
+};
+
 export interface RaceEvent {
   id: string;
   name: string;
@@ -73,8 +82,10 @@ interface SetupState {
   devices: Record<Provider, boolean>;
   lastSync: number | null;
   showNutrition: boolean;
+  conditions: DietCondition[];
 
   update(patch: Partial<Pick<SetupState, "profile" | "fitness" | "weightKg" | "heightCm" | "showNutrition">>): void;
+  toggleCondition(c: DietCondition): void;
   complete(): void;
   restart(): void;
   toggleRace(id: string): void;
@@ -95,6 +106,7 @@ const DEFAULTS = {
   devices: { garmin: true, strava: true, wahoo: false },
   lastSync: null as number | null,
   showNutrition: false,
+  conditions: [] as DietCondition[],
   slots: [
     { id: "am", time: "06:30", minutes: 60 },
     { id: "pm", time: "18:00", minutes: 90 },
@@ -115,6 +127,8 @@ export const useSetup = create<SetupState>()(
       setDevice: (p, connected) =>
         set((s) => ({ devices: { ...s.devices, [p]: connected }, lastSync: connected ? Date.now() : s.lastSync })),
       sync: () => set({ lastSync: Date.now() }),
+      toggleCondition: (c) =>
+        set((s) => ({ conditions: s.conditions.includes(c) ? s.conditions.filter((x) => x !== c) : [...s.conditions, c] })),
       addSlot: () =>
         set((s) => ({ slots: [...s.slots, { id: `s${Date.now().toString(36)}`, time: "12:30", minutes: 45 }] })),
       updateSlot: (id, patch) => set((s) => ({ slots: s.slots.map((x) => (x.id === id ? { ...x, ...patch } : x)) })),

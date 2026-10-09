@@ -11,7 +11,7 @@ from app.models.workout import WorkoutCandidate
 
 
 class RouteDecision(BaseModel):
-    intent: Literal["daily", "training", "recovery", "race", "performance", "general"]
+    intent: Literal["daily", "training", "recovery", "race", "performance", "nutrition", "general"]
     agents: list[str]
 
 

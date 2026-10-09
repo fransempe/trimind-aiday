@@ -14,13 +14,18 @@ class Settings(BaseSettings):
     llm_mode: Literal["live", "fake"] = "live"
     # Demora simulada por agente en modo fake (segundos), para que la demo se vea trabajar.
     fake_delay_s: float = 1.5
-    # Modelos free de OpenRouter que aceptan salida JSON (response_format).
-    specialist_model: str = "openrouter/nvidia/nemotron-3-super-120b-a12b:free"
-    coach_model: str = "openrouter/nvidia/nemotron-3-super-120b-a12b:free"
-    # Si el modelo principal falla, se prueba este. Vacío = sin fallback.
-    fallback_model: str = "openrouter/google/gemma-4-31b-it:free"
+    # Gemini free tier (Google AI Studio) como principal.
+    specialist_model: str = "gemini/gemini-flash-lite-latest"
+    coach_model: str = "gemini/gemini-flash-latest"
+    # Si el modelo principal falla, se prueba este (OpenRouter free). Vacío = sin fallback.
+    fallback_model: str = "openrouter/nvidia/nemotron-3-super-120b-a12b:free"
     llm_timeout_s: float = 45
     llm_max_attempts: int = 2
+    # Guarda las respuestas del LLM en backend/.cache: repetir la demo no gasta cupo.
+    llm_cache: bool = True
+    # Al responder desde caché, espera el tiempo que tardó la llamada original (hasta este tope).
+    llm_cache_replay: bool = True
+    llm_cache_replay_max_ms: int = 3000
     max_rule_retries: int = 2
 
     scenario: str = "normal"

@@ -75,6 +75,17 @@ retomar el grafo y duplicaría el evento.
 Las API keys (`OPENROUTER_API_KEY`, `GEMINI_API_KEY`, etc.) se cargan desde `backend/.env` al
 arrancar ([`config.py`](../backend/app/config.py)).
 
+## Caché y observabilidad
+
+- **Caché** (`llm.py`): la clave es esquema + modelo + prompt + contexto. Se guarda en
+  `backend/.cache/llm-cache.json`. Al responder desde caché se espera la latencia original (tope
+  `LLM_CACHE_REPLAY_MAX_MS`, 3 s) para que la UI siga mostrando a los agentes trabajar.
+- **Registro de llamadas**: cada intento queda en memoria (últimos 300) con agente, modelo, latencia,
+  tokens, costo estimado, caché, fallback, reintento y error. `GET /observability` lo devuelve junto
+  con el último eval; `DELETE /observability/cache` vacía la caché.
+- **Evals** (`backend/evals/run_evals.py`): casos contra el LLM real que verifican las reglas duras y
+  las condiciones alimentarias.
+
 ## Reglas duras
 
 [`app/rules/engine.py`](../backend/app/rules/engine.py):
@@ -113,5 +124,12 @@ arrancar ([`config.py`](../backend/app/config.py)).
 | GET | `/recommendation/stream` | Lo mismo por SSE, un evento por nodo |
 | POST | `/recommendation/resume` | `{thread_id, action: accept\|reject}` retoma el grafo pausado |
 | POST | `/race/strategy` | Estrategia por segmento con el Race Strategy agent |
+| POST | `/race/debrief` | Análisis de una carrera completada (tiempos y relato del atleta) |
+| POST | `/athlete/knowledge` | Base de conocimiento del atleta; deja su resumen en el contexto de los agentes |
+| PUT | `/athlete/knowledge/context` | Restaura ese resumen desde el navegador después de un reinicio |
+| GET | `/observability` | Llamadas al LLM, resumen, configuración y último eval |
+| DELETE | `/observability/cache` | Vacía la caché de respuestas del LLM |
+| POST | `/agents/{agente}/ask` | Pregunta directa a un agente (`head_coach` consulta a su equipo) |
+| POST | `/nutrition/plan` | Plan de comidas del Nutrition Agent, coordinado con el Head Coach y el staff |
 | POST | `/ask` | Pregunta libre: el router elige especialistas y responde el Head Coach |
 | POST | `/feedback` | RPE y piernas después de entrenar |

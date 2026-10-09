@@ -2,6 +2,8 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
+import { knowledgeContext, useRaceLog } from "@/lib/race-log";
 import { useSessionLog } from "@/lib/session-log";
 import { useSetup } from "@/lib/setup";
 
@@ -14,11 +16,16 @@ export function SetupGate() {
   const [ready, setReady] = useState(() => useSetup.persist?.hasHydrated() ?? false);
 
   useEffect(() => {
-    const api = useSetup.persist;
-    if (!api) return;
-    const unsub = api.onFinishHydration(() => setReady(true));
-    void api.rehydrate();
+    const setup = useSetup.persist;
+    if (!setup) return;
+    const unsub = setup.onFinishHydration(() => setReady(true));
+    void setup.rehydrate();
     void useSessionLog.persist?.rehydrate();
+    // La base de conocimiento vive en el navegador: se la devolvemos al backend para que los agentes la usen.
+    void Promise.resolve(useRaceLog.persist?.rehydrate()).then(() => {
+      const k = useRaceLog.getState().knowledge;
+      if (k) api.restoreKnowledge(knowledgeContext(k)).catch(() => {});
+    });
     return unsub;
   }, []);
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { SimpleLineChart } from "@/components/charts";
+import { AgentChat } from "@/components/agent-chat";
 import { TopBar } from "@/components/layout/top-bar";
 import { INTENSITY_META, Panel, StatTile } from "@/components/shared";
 import { formatPace } from "@/lib/engine";
@@ -60,13 +61,8 @@ export default function PerformancePage() {
         </div>
       </Panel>
 
-      <Panel title="Performance Agent · beta">
-        <p className="text-sm text-muted-foreground">
-          El Performance Agent ya participa del staff en el panel de Today. En la próxima iteración va a detectar
-          estancamientos de FTP y proponer tests de umbral sin que haya que tocar el Head Coach: se suma como un
-          especialista más en el registry.
-        </p>
-      </Panel>
+
+      <AgentChat agent="performance" suggestions={["¿Cómo viene mi FTP?", "¿Cuándo hago un test de umbral?", "¿Qué zonas uso para el sweet spot?"]} />
     </div>
   );
 }

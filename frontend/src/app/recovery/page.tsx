@@ -1,6 +1,7 @@
 "use client";
 
 import { dayLabel, HrvChart, SimpleLineChart, SleepChart } from "@/components/charts";
+import { AgentChat } from "@/components/agent-chat";
 import { TopBar } from "@/components/layout/top-bar";
 import { BAND_META, Panel, StatTile } from "@/components/shared";
 import { ReadinessSheet } from "@/components/today/readiness-sheet";
@@ -56,6 +57,8 @@ export default function RecoveryPage() {
           <ScenarioControl compact />
         </div>
       </div>
+
+      <AgentChat agent="recovery" suggestions={["Dormí mal, ¿entreno igual?", "¿Qué indica mi HRV de hoy?", "¿Cómo recupero mejor esta semana?"]} />
     </div>
   );
 }

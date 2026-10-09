@@ -50,7 +50,7 @@ export function WhyPanel() {
           ) : (
             <div>
               <h3 className="flex items-center gap-2 text-[14px] font-semibold"><Scale className="size-4" /> Sin discrepancias</h3>
-              <p className="mt-1 text-[14px] text-muted-foreground">Los cuatro especialistas coinciden con la decisión.</p>
+              <p className="mt-1 text-[14px] text-muted-foreground">Todos los especialistas coinciden con la decisión.</p>
             </div>
           )}
 

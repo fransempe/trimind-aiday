@@ -1,6 +1,17 @@
 // Cliente único para el frontend. NEXT_PUBLIC_API_MODE=api usa FastAPI; por defecto, mock.
 import { SPECIALISTS } from "@/lib/agents";
-import { askAnswer, headCoachDecision, routeQuestion, specialistOpinion } from "@/lib/mock/coaching";
+import { askAnswer, directAnswer, headCoachDecision, routeQuestion, specialistOpinion } from "@/lib/mock/coaching";
+import { type DayItem } from "@/lib/day";
+import { heuristicMealPlan, type MealPlan, type MealPlanRequest } from "@/lib/meal-plan";
+import {
+  heuristicDebrief,
+  heuristicKnowledge,
+  type KnowledgeBase,
+  type KnowledgeRequest,
+  type RaceDebrief,
+  type RaceDebriefRequest,
+  type TrainingFacts,
+} from "@/lib/race-log";
 import { heuristicStrategy, type RaceStrategy, type RaceStrategyRequest, type TrainingSummary } from "@/lib/strategy";
 import type {
   AskResponse,
@@ -21,6 +32,70 @@ export interface TriMindApi {
   feedback(req: FeedbackRequest): Promise<void>;
   /** Estrategia por segmento del Race Agent. `training` solo lo usa el modo mock (el backend tiene los datos). */
   raceStrategy(req: RaceStrategyRequest, training: TrainingSummary): Promise<RaceStrategy>;
+  /** Plan de comidas del Nutrition Agent. `items` y `daysToRace` solo los usa el modo mock. */
+  nutritionPlan(req: MealPlanRequest, items: DayItem[], daysToRace: number): Promise<MealPlan>;
+  /** Pregunta directa a un agente. `head_coach` responde con su equipo detrás. */
+  askAgent(agent: string, question: string, snapshot: AthleteSnapshot, context?: Record<string, unknown>): Promise<AgentAnswer>;
+  /** Análisis de una carrera completada por el Race Agent. */
+  raceDebrief(req: RaceDebriefRequest): Promise<RaceDebrief>;
+  /** Base de conocimiento del atleta. `name` y `facts` solo los usa el modo mock. */
+  buildKnowledge(req: KnowledgeRequest, name: string, facts: TrainingFacts): Promise<KnowledgeBase>;
+  /** Le devuelve al backend el resumen guardado en el navegador, para el contexto de los agentes. */
+  restoreKnowledge(text: string): Promise<void>;
+  /** Llamadas al LLM, caché, fallbacks y el último eval (solo con backend). */
+  observability(): Promise<Observability | null>;
+  clearLlmCache(): Promise<number>;
+}
+
+export interface LlmCall {
+  ts: string;
+  label: string;
+  model: string;
+  requested_model: string;
+  latency_ms: number;
+  ok: boolean;
+  cached: boolean;
+  fallback: boolean;
+  retry: boolean;
+  tokens_in: number;
+  tokens_out: number;
+  cost_usd: number;
+  error: string;
+}
+
+export interface EvalCase {
+  id: string;
+  name: string;
+  passed: boolean;
+  detail: string;
+  rule_retries: number;
+  models: string[];
+  seconds: number;
+}
+
+export interface Observability {
+  calls: LlmCall[];
+  summary: {
+    total: number;
+    llm_ok: number;
+    cached: number;
+    errors: number;
+    fallbacks: number;
+    avg_latency_ms: number;
+    tokens_in: number;
+    tokens_out: number;
+    cost_usd: number;
+    cache_entries: number;
+  };
+  evals: { ran_at: string; llm_mode: string; passed: number; total: number; cases: EvalCase[]; models: Record<string, string> } | null;
+  config: { llm_mode: string; specialist_model: string; coach_model: string; fallback_model: string; cache: boolean };
+}
+
+export interface AgentAnswer {
+  agent: string;
+  answer: string;
+  model: string;
+  consulted_agents: string[];
 }
 
 const now = () => new Date().toISOString();
@@ -40,7 +115,7 @@ const mockApi: TriMindApi = {
 
     at(300, () => onEvent({ type: "router_decided", run_id, ts: now(), intent: "daily", agents }));
     // Fan-out: todos arrancan casi juntos y terminan en distinto orden.
-    const finish = [1900, 2700, 2300, 3200];
+    const finish = agents.map((_, i) => [1900, 2700, 2300, 3200, 2500][i % 5]);
     const opinions = agents.map((id) => specialistOpinion(id, snapshot));
     agents.forEach((agent, i) => {
       at(700 + i * 120, () => onEvent({ type: "agent_started", run_id, ts: now(), agent }));
@@ -100,6 +175,40 @@ const mockApi: TriMindApi = {
     await sleep(2600);
     return heuristicStrategy(req, training, "gemma-4-31b (simulado)");
   },
+
+  async nutritionPlan(req, items, daysToRace) {
+    await sleep(2400);
+    return heuristicMealPlan(req, items, daysToRace, "gemma-4-31b (simulado)");
+  },
+
+  async askAgent(agent, question, snapshot, context) {
+    if (agent === "head_coach") {
+      const r = await mockApi.ask(question, snapshot);
+      return { agent, answer: r.answer, model: "gemini-flash (simulado)", consulted_agents: r.consulted_agents };
+    }
+    await sleep(1600);
+    return { agent, answer: directAnswer(agent, question, snapshot, context), model: "gemini-flash-lite (simulado)", consulted_agents: [] };
+  },
+
+  async raceDebrief(req) {
+    await sleep(2200);
+    return heuristicDebrief(req, "gemini-flash-lite (simulado)");
+  },
+
+  async buildKnowledge(req, name, facts) {
+    await sleep(2800);
+    return heuristicKnowledge(req, name, facts, "gemini-flash (simulado)");
+  },
+
+  async restoreKnowledge() {},
+
+  async observability() {
+    return null;
+  },
+
+  async clearLlmCache() {
+    return 0;
+  },
 };
 
 // ---------------------------------------------------------------- FastAPI
@@ -140,6 +249,22 @@ const httpApi: TriMindApi = {
   ask: (question) => post<AskResponse>("/ask", { question }),
   feedback: (req) => post("/feedback", req),
   raceStrategy: (req) => post<RaceStrategy>("/race/strategy", req),
+  nutritionPlan: (req) => post<MealPlan>("/nutrition/plan", req),
+  raceDebrief: (req) => post<RaceDebrief>("/race/debrief", req),
+  buildKnowledge: (req) => post<KnowledgeBase>("/athlete/knowledge", req),
+  async restoreKnowledge(text) {
+    await fetch(`${BASE}/athlete/knowledge/context`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+  },
+  async observability() {
+    const res = await fetch(`${BASE}/observability`);
+    if (!res.ok) throw new Error(`/observability: ${res.status}`);
+    return (await res.json()) as Observability;
+  },
+  async clearLlmCache() {
+    const res = await fetch(`${BASE}/observability/cache`, { method: "DELETE" });
+    return ((await res.json()) as { cleared: number }).cleared;
+  },
+  askAgent: (agent, question, _snapshot, context) => post<AgentAnswer>(`/agents/${agent}/ask`, { question, context: context ?? {} }),
 };
 
 const MODE = process.env.NEXT_PUBLIC_API_MODE;

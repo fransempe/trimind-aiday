@@ -12,3 +12,4 @@ node_modules/
 .impeccable/questions/
 *.log
 backend/package-lock.json
+.cache/

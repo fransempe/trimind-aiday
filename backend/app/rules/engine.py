@@ -15,8 +15,9 @@ MEDICAL_TERMS = re.compile(
     re.IGNORECASE,
 )
 SAFE_MEDICAL_CONTEXT = re.compile(
-    r"(no (es|constituye) (un )?diagn[oó]stico|consult\w+ (a|con) un "
-    r"profesional)",
+    r"(no (es|constituye) (un )?diagn[oó]stico|no (somos|soy) m[eé]dic\w*|"
+    r"no (podemos|puedo|vamos a) (dar|darte|hacer|hacerte) (un )?diagn[oó]stico|"
+    r"consult\w+ (a|con) (un|una|tu) (profesional|m[eé]dic\w*|traumat[oó]log\w*|kinesi[oó]log\w*|especialista))",
     re.IGNORECASE,
 )
 

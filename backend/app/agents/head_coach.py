@@ -10,7 +10,7 @@ from pydantic import BaseModel
 
 from app.agents.base import COMMON_RULES
 from app.config import settings
-from app.llm import LLMError, structured, to_json
+from app.llm import LLMError, record_heuristic, structured, to_json
 from app.models.common import ImpactLevel
 from app.models.decision import CoachDecision, CoachDraft, Disagreement
 from app.models.metrics import AthleteSnapshot
@@ -134,7 +134,7 @@ async def decide(
                 + "\n".join(f"- {v.message}" for v in violations)
             )
         try:
-            result = await structured(CoachDraft, SYSTEM, user, settings.coach_model)
+            result = await structured(CoachDraft, SYSTEM, user, settings.coach_model, label="head_coach")
             if result.value.selected_candidate_id in ids:
                 draft = result.value
             else:
@@ -143,6 +143,7 @@ async def decide(
                 )
         except LLMError as e:
             log.error("Head Coach usa heurística por error del LLM: %s", e)
+            record_heuristic("head_coach")
     draft = draft or heuristic_draft(snap, opinions)
 
     chosen = next(c for c in candidates if c.id == draft.selected_candidate_id)
@@ -164,8 +165,9 @@ async def answer(question: str, opinions: list[AgentOpinion]) -> str:
         user = f"Pregunta: {question}\n\nOpiniones:\n{to_json([o.model_dump() for o in opinions])}"
         try:
             return (
-                await structured(AnswerDraft, ANSWER_SYSTEM, user, settings.coach_model)
+                await structured(AnswerDraft, ANSWER_SYSTEM, user, settings.coach_model, label="head_coach · respuesta")
             ).value.answer
         except LLMError as e:
             log.error("Respuesta heurística por error del LLM: %s", e)
+            record_heuristic("head_coach · respuesta")
     return " ".join(o.observations[0] for o in opinions)

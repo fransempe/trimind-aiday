@@ -3,6 +3,7 @@
 import { ArrowRight, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ConditionPicker } from "@/components/condition-picker";
 import { DeviceLed } from "@/components/device-led";
 import { TopBar } from "@/components/layout/top-bar";
 import { ProfileForm } from "@/components/profile-form";
@@ -28,6 +29,11 @@ export default function ConfiguracionPage() {
 
         <Panel id="cfg-slots" title="Horarios disponibles para entrenar">
           <SlotsEditor />
+        </Panel>
+
+        <Panel id="cfg-diet" title="Condiciones alimentarias">
+          <p className="mb-3 text-[14px] text-muted-foreground">El Nutrition Agent adapta tu plan de comidas a estas condiciones.</p>
+          <ConditionPicker />
         </Panel>
 
         <Panel id="cfg-devices" title="Dispositivos"

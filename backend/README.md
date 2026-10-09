@@ -1,13 +1,13 @@
 # TriMind AI · Backend
 
-Python 3.12 · uv · LangGraph · LiteLLM (OpenRouter, modelos free) · FastAPI con SSE.
+Python 3.12 · uv · LangGraph · LiteLLM (Gemini free tier, OpenRouter de fallback) · FastAPI con SSE.
 
 ## Correr
 
 ```bash
 cd backend
 uv sync
-cp .env.example .env        # y pegá tu OPENROUTER_API_KEY
+cp .env.example .env        # y pegá tu GEMINI_API_KEY
 uv run uvicorn app.api.main:app --reload --port 8000
 ```
 
@@ -35,13 +35,14 @@ NEXT_PUBLIC_API_MODE=api
 | GET | `/recommendation/stream` | SSE con un evento por nodo |
 | POST | `/recommendation/resume` | `{thread_id, action: accept\|reject}` retoma el grafo pausado |
 | POST | `/race/strategy` | Estrategia por segmento para una carrera, según el entrenamiento reciente |
+| POST | `/nutrition/plan` | Plan de comidas del Nutrition Agent, coordinado con el staff |
 | POST | `/ask` | Pregunta libre: el router elige especialistas |
 | POST | `/feedback` | RPE y piernas post-entrenamiento |
 
 ## Grafo
 
 ```
-router → fan-out (Send) → training · recovery · race · performance → head_coach → rules
+router → fan-out (Send) → training · recovery · race · performance · nutrition → head_coach → rules
 rules ─(viola una regla, máx. 2 reintentos)→ head_coach
 rules ─(modify)→ approval (interrupt) → finalize
 rules ─(train/rest)→ finalize

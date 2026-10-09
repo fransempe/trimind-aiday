@@ -1,6 +1,8 @@
 "use client";
 
+import { AgentChat } from "@/components/agent-chat";
 import { TopBar } from "@/components/layout/top-bar";
+import { CompletedRaces } from "@/components/race/completed-races";
 import { RaceAgenda } from "@/components/race/race-agenda";
 import { Panel, StatTile } from "@/components/shared";
 import { RaceCountdownCard } from "@/components/today/race-countdown-card";
@@ -15,7 +17,9 @@ export default function RacePage() {
 
   return (
     <div className="space-y-10">
-      <TopBar title="Race" subtitle="Tu agenda de carreras, las disponibles para tu perfil y la estrategia con IA de cada una." />
+      <TopBar title="Race" subtitle="Tu agenda de carreras, las disponibles para tu perfil la estrategia con IA de cada una y tus resultados." />
+
+      <CompletedRaces />
 
       <RaceAgenda />
 
@@ -49,6 +53,8 @@ export default function RacePage() {
           </Panel>
         </>
       )}
+
+      <AgentChat agent="race" suggestions={["¿Cómo encaro la bici en la carrera?", "¿Qué hago los días previos?", "¿Qué ritmo de run es realista?"]} />
     </div>
   );
 }

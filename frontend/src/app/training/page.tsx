@@ -1,6 +1,7 @@
 "use client";
 
 import { FormChart, LoadChart, WeeklyVolumeChart, dayLabel, weeklyVolume } from "@/components/charts";
+import { AgentChat } from "@/components/agent-chat";
 import { TopBar } from "@/components/layout/top-bar";
 import { PlanSheet } from "@/components/training/plan-sheet";
 import { INTENSITY_META, Panel, SportDot, StatTile } from "@/components/shared";
@@ -87,6 +88,8 @@ export default function TrainingPage() {
           </ul>
         </Panel>
       </div>
+
+      <AgentChat agent="training" suggestions={["¿Por qué este volumen esta semana?", "¿Puedo cambiar la sesión de hoy por otro día?", "¿Cómo encaro el taper?"]} />
     </div>
   );
 }

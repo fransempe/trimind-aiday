@@ -168,3 +168,154 @@ def test_race_strategy_keeps_numbers_in_code():
     f = race_strategy.PACING_FACTOR[st.pacing]
     assert st.segments[1].target_low == round(205 * f)
     assert st.estimated_finish_min > 280
+
+
+def test_nutrition_agent_joins_the_daily_run():
+    from app.agents.registry import REGISTRY
+
+    assert "nutrition" in REGISTRY
+    op = asyncio.run(REGISTRY["nutrition"].opine(build_snapshot(load_athlete_data("normal", today=TODAY))))
+    assert op.agent == "nutrition" and "g de carbohidratos" in op.observations[0]
+
+
+def test_meal_plan_numbers_in_code_and_uses_staff():
+    from app.agents import meal_plan
+    from app.models.nutrition import MealPlanRequest, PlannedSession, StaffNote
+
+    snap = build_snapshot(load_athlete_data("normal", today=TODAY))
+    req = MealPlanRequest(
+        weight_kg=70,
+        sessions=[
+            PlannedSession(time="06:30", sport="strength", title="Gym", minutes=40),
+            PlannedSession(time="18:00", sport="bike", title="3x15'", minutes=80, key=True, intense=True),
+        ],
+        decision="train",
+        primary_reason="Readiness en verde.",
+        staff=[StaffNote(agent="recovery", recommendation="train", observations=["Durmió 7h40."])],
+    )
+    plan = asyncio.run(meal_plan.generate(req, snap))
+    assert [m.meal for m in plan.meals] == ["desayuno", "almuerzo", "merienda", "cena"]
+    # La merienda va antes de la bici de las 18:00 y la cena es la de recuperación.
+    merienda, cena = plan.meals[2], plan.meals[3]
+    assert merienda.when.startswith("antes") and cena.when.startswith("después")
+    assert merienda.carbs_g > 0.20 * sum(m.carbs_g for m in plan.meals)
+    assert plan.carbs_g == (350, 490)  # 80' intensos sin contar el gym: 5-7 g/kg × 70 kg
+    assert any("Head Coach" in c for c in plan.coordination)
+
+    # Sin corrida previa, el nutricionista consulta a Recovery y Training.
+    alone = asyncio.run(meal_plan.generate(MealPlanRequest(weight_kg=70), snap))
+    assert {n.agent for n in alone.consulted} == {"recovery", "training"}
+    assert alone.level == "descanso"
+
+
+def test_meal_plan_adapts_to_conditions():
+    from app.agents import meal_plan
+    from app.models.nutrition import MealPlanRequest, PlannedSession
+
+    snap = build_snapshot(load_athlete_data("normal", today=TODAY))
+    sessions = [PlannedSession(time="18:00", sport="bike", title="3x15'", minutes=80, key=True, intense=True)]
+    base = asyncio.run(meal_plan.generate(MealPlanRequest(weight_kg=70, sessions=sessions, staff=[]), snap))
+    req = MealPlanRequest(weight_kg=70, sessions=sessions, conditions=["celiaquia", "lactosa", "diabetes"])
+    plan = asyncio.run(meal_plan.generate(req, snap))
+    foods = " ".join(f for m in plan.meals for f in m.foods)
+    assert "sin TACC" in foods and "deslactosad" in foods and "miel" not in foods
+    assert plan.conditions == ["celiaquia", "lactosa", "diabetes"]
+    # Con diabetes el reparto es más parejo: menos diferencia entre la comida más y la menos cargada.
+    def spread(p):
+        return max(m.carbs_g for m in p.meals) - min(m.carbs_g for m in p.meals)
+
+    assert spread(plan) < spread(base)
+
+
+def test_ask_single_agent():
+    from fastapi.testclient import TestClient
+
+    from app.api.main import app
+
+    client = TestClient(app)
+    res = client.post("/agents/nutrition/ask", json={"question": "¿Qué como antes de la bici?"})
+    assert res.status_code == 200 and res.json()["agent"] == "nutrition" and res.json()["answer"]
+    res = client.post("/agents/head_coach/ask", json={"question": "¿Cómo viene mi FTP?"})
+    assert res.status_code == 200 and res.json()["consulted_agents"]
+    assert client.post("/agents/nadie/ask", json={"question": "hola che"}).status_code == 404
+
+
+def test_race_debrief_computes_paces_in_code():
+    from app.agents import knowledge
+    from app.models.knowledge import RaceDebriefRequest, SegmentResult
+
+    req = RaceDebriefRequest(
+        race_name="Triatlón Olímpico Nordelta",
+        distance="Olímpico",
+        days_ago=120,
+        source="garmin",
+        segments=[
+            SegmentResult(label="Natación 1,5 km", sport="swim", distance_km=1.5, time_s=1650),
+            SegmentResult(label="Ciclismo 40 km", sport="bike", distance_km=40, time_s=4200),
+            SegmentResult(label="Running 10 km", sport="run", distance_km=10, time_s=2700),
+        ],
+        transitions_s=180,
+        brief="Me faltó un gel en la bici y el run se me hizo largo.",
+    )
+    d = asyncio.run(knowledge.debrief(req))
+    assert d.total_s == 1650 + 4200 + 2700 + 180
+    assert [s.pace for s in d.segments] == ["1:50 /100 m", "34.3 km/h", "4:30 /km"]
+    assert d.summary and d.insights
+
+
+def test_knowledge_base_feeds_agent_context():
+    from app.agents import knowledge
+    from app.models.knowledge import KnowledgeRequest, RaceRecord
+    from app.repositories.knowledge_store import get_context, set_context
+
+    set_context("")
+    req = KnowledgeRequest(
+        profile="triathlon",
+        fitness="other_coach",
+        weight_kg=72,
+        height_cm=178,
+        races=[RaceRecord(race_name="Media Maratón", distance="21 km", days_ago=40, total_s=5700)],
+    )
+    kb = asyncio.run(knowledge.build_knowledge(req, load_athlete_data("normal", today=TODAY)))
+    assert kb.facts.weekly_hours > 0 and set(kb.facts.hours_by_sport) == {"swim", "bike", "run"}
+    assert kb.strengths and kb.opportunities and "Media Maratón" in kb.races_summary
+    assert get_context().startswith("Base de conocimiento de")
+    set_context("")
+
+
+
+def test_llm_cache_and_observability(tmp_path, monkeypatch):
+    from pydantic import BaseModel
+
+    from app import llm
+    from app.config import settings
+
+    class Out(BaseModel):
+        answer: str
+
+    calls = []
+
+    async def fake_completion(**kw):
+        calls.append(kw["model"])
+
+        class Msg:
+            content = '{"answer": "hola"}'
+
+        class Choice:
+            message = Msg()
+
+        class Resp:
+            choices = [Choice()]
+            usage = None
+
+        return Resp()
+
+    monkeypatch.setattr(llm, "CACHE_PATH", tmp_path / "cache.json")
+    monkeypatch.setattr(llm, "_cache", None)
+    monkeypatch.setattr(llm.litellm, "acompletion", fake_completion)
+    monkeypatch.setattr(settings, "llm_cache", True)
+    first = asyncio.run(llm.structured(Out, "sys", "user", "m1", label="test"))
+    second = asyncio.run(llm.structured(Out, "sys", "user", "m1", label="test"))
+    assert calls == ["m1"] and first.value == second.value and second.model.endswith("caché")
+    summary = llm.calls_summary()["summary"]
+    assert summary["cached"] >= 1 and summary["llm_ok"] >= 1

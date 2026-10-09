@@ -57,7 +57,8 @@ function sessionFuel(time: string, s: DaySession, kg: number, laterSession: bool
 
 export function dayNutrition(items: DayItem[], kg: number, daysToRace: number): DayNutrition {
   const sessions = items.filter((i): i is DayItem & { session: DaySession } => !!i.session && i.session.kind !== "rest");
-  const minutes = sessions.reduce((a, i) => a + i.session.minutes, 0);
+  // El gym no suma a la demanda de carbohidratos: cuenta solo el trabajo de resistencia.
+  const minutes = sessions.filter((i) => i.session.sport !== "strength").reduce((a, i) => a + i.session.minutes, 0);
   const intense = sessions.some((i) => isIntense(i.session));
 
   let level: DayNutrition["level"];
@@ -65,9 +66,11 @@ export function dayNutrition(items: DayItem[], kg: number, daysToRace: number): 
   if (daysToRace >= 0 && daysToRace <= 2) {
     level = "carga";
     reason = `Faltan ${daysToRace} días para la carrera: se cargan los depósitos de glucógeno.`;
-  } else if (!sessions.length) {
+  } else if (!minutes) {
     level = "descanso";
-    reason = "Sin entrenamiento: comidas normales, priorizando verduras y proteína.";
+    reason = sessions.length
+      ? "Solo gym: comidas normales, con proteína después de la sesión."
+      : "Sin entrenamiento: comidas normales, priorizando verduras y proteína.";
   } else if (minutes >= 150 || (intense && minutes >= 90)) {
     level = "alto";
     reason = `${minutes} min de entrenamiento${intense ? " con bloques intensos" : ""}: hace falta reponer bien.`;

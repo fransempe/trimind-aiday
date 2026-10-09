@@ -10,7 +10,7 @@ web
 
 El público técnico de un AI Day: ingenieros y gente de producto que evalúan en vivo una demo de
 orquestación multiagente. Ven la app en una notebook o por una pantalla compartida en streaming,
-mientras alguien la opera y la explica. El triatleta (Tomás Ferreyra, ficticio) es el personaje de la
+mientras alguien la opera y la explica. El triatleta (Francisco Sempé, 39 años) es el personaje de la
 demo, no el usuario real: el público tiene que entender en segundos qué le pasa a ese atleta y qué
 decide el staff de agentes.
 

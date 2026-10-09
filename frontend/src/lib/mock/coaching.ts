@@ -1,6 +1,7 @@
 // Simulación determinista del equipo de agentes para el modo mock.
 // En modo API estas opiniones las generan los LLM del grafo de LangGraph.
 import { formatSleep } from "@/lib/engine";
+import { dayNutrition } from "@/lib/nutrition";
 import { candidates } from "@/lib/mock/data";
 import type {
   AgentOpinion,
@@ -117,6 +118,25 @@ const specialists: Record<string, (c: Ctx) => AgentOpinion> = {
     }
     return opinion("performance", "train", 80, 0.7, obs, { progresion_ftp: "moderate" });
   },
+
+  nutrition: ({ s, r, sleep }) => {
+    const w = s.planned_workout;
+    const intense = w.steps.some((x) => ["sweet_spot", "threshold", "vo2max", "anaerobic"].includes(x.intensity));
+    const n = dayNutrition(
+      [{ slot: { id: "k", time: "18:00", minutes: 90 }, session: { kind: "key", sport: w.sport, title: w.title, minutes: w.total_duration_min, detail: "", steps: w.steps } }],
+      s.profile.weight_kg,
+      s.days_to_race,
+    );
+    const obs = [`${n.label}: ${n.total.low}-${n.total.high} g de carbohidratos (${n.gPerKg.low}-${n.gPerKg.high} g/kg) y ${Math.round(1.6 * s.profile.weight_kg / 5) * 5}-${Math.round(2 * s.profile.weight_kg / 5) * 5} g de proteína.`];
+    if (intense) obs.push("La sesión tiene bloques intensos: llegar con 1-2 g/kg de carbohidratos 1 a 3 h antes.");
+    if (sleep < 6.5) obs.push(`Durmió ${formatSleep(sleep)}: conviene priorizar la comida de recuperación y la cena.`);
+    if (s.days_to_race <= 7) obs.push("Semana de carrera: comidas conocidas, nada nuevo, y subir carbohidratos los últimos 2 días.");
+    const weak = r.band !== "green" && intense;
+    return opinion("nutrition", weak && sleep < 6 ? "modify" : "train", weak ? 55 : 78, 0.72, obs.slice(0, 4), {
+      disponibilidad_energetica: intense ? "moderate" : "low",
+      recuperacion_nutricional: sleep < 6 ? "high" : weak ? "moderate" : "low",
+    });
+  },
 };
 
 export function specialistOpinion(agent: string, snapshot: AthleteSnapshot): AgentOpinion {
@@ -194,7 +214,8 @@ export function headCoachDecision(snapshot: AthleteSnapshot, opinions: AgentOpin
 }
 
 const ASK_ROUTES: { match: RegExp; agents: string[] }[] = [
-  { match: /carrera|race|ritmo|estrategia|nutri|gel|taper/i, agents: ["race", "performance"] },
+  { match: /nutri|comer|comida|desayun|almuer|merienda|cena|carbo|gel|hidrat/i, agents: ["nutrition", "training"] },
+  { match: /carrera|race|ritmo|estrategia|taper/i, agents: ["race", "performance"] },
   { match: /dorm|sueñ|hrv|cansad|fatiga|recuper|descans/i, agents: ["recovery", "training"] },
   { match: /ftp|vatios|potencia|progres|mejor/i, agents: ["performance", "training"] },
 ];
@@ -205,6 +226,8 @@ export function routeQuestion(question: string): string[] {
 
 export function askAnswer(question: string, snapshot: AthleteSnapshot, agents: string[]): string {
   const r = snapshot.readiness;
+  if (agents[0] === "nutrition")
+    return `Con la sesión de hoy (${snapshot.planned_workout.title}) el Nutrition Agent apunta a 5-7 g de carbohidratos por kilo en el día. Llegá a la sesión con una comida rica en carbohidratos 2 a 3 h antes, sumá 30-60 g por hora si dura más de una hora y, en la primera hora después, combiná carbohidratos con proteína. El plan de comidas completo está en Nutrición.`;
   if (agents[0] === "race")
     return `Para ${snapshot.race.name} el equipo propone nadar a 1:47-1:50 /100 m, pedalear a 205-215 W (76-80% de tu FTP de ${snapshot.profile.ftp_w} W) y correr los primeros 5 km a 5:00 /km antes de acelerar. En la bici, 80-90 g de carbohidratos por hora. Faltan ${snapshot.days_to_race} días: lo que queda es llegar fresco.`;
   if (agents[0] === "recovery")
@@ -212,4 +235,20 @@ export function askAnswer(question: string, snapshot: AthleteSnapshot, agents: s
   if (agents[0] === "performance")
     return `Tu FTP pasó de 242 a ${snapshot.profile.ftp_w} W en 12 meses (+11,6%). Lo que más aportó fueron los bloques de sweet spot de los martes. Después de la carrera, el equipo sugiere un test de 20' para recalibrar zonas.`;
   return `El equipo analizó tu situación: readiness ${r.score}/100, TSB ${snapshot.load.tsb.toFixed(1)} y ${snapshot.days_to_race} días para la carrera. ${r.band === "green" ? "Seguí el plan tal como está." : "Hoy priorizá la recuperación: rodaje suave y buena hidratación."}`;
+}
+
+/** Respuesta directa de un especialista (modo mock): sus lecturas de hoy y un cierre según su área. */
+export function directAnswer(agent: string, question: string, snapshot: AthleteSnapshot, context?: Record<string, unknown>): string {
+  const obs = specialistOpinion(agent, snapshot).observations.slice(0, 2).join(" ");
+  const conditions = (context?.conditions as string[] | undefined) ?? [];
+  const closing: Record<string, string> = {
+    training: "Si querés mover la sesión de día, avisame y la acomodo para no juntar dos de calidad seguidas.",
+    recovery: "Esta noche apuntá a dormir más de 8 h; si la fatiga sigue varios días, consultalo con un profesional de la salud.",
+    race: `Faltan ${snapshot.days_to_race} días: lo que queda es llegar fresco y con la estrategia ensayada.`,
+    performance: "Después de la carrera conviene un test de 20' para recalibrar zonas.",
+    nutrition: conditions.length
+      ? "Tu plan ya está adaptado a tus condiciones alimentarias; los ajustes clínicos van con tu equipo de salud."
+      : "Antes de la sesión clave priorizá carbohidratos fáciles de digerir, y después combiná carbohidratos con proteína.",
+  };
+  return `${obs} ${closing[agent] ?? ""}`.trim() || `Recibí tu pregunta: "${question}".`;
 }

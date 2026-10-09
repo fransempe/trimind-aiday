@@ -3,12 +3,46 @@
 import { ChevronDown, Wheat } from "lucide-react";
 import Link from "next/link";
 import type { DayItem } from "@/lib/day";
-import { dayNutrition, type Range } from "@/lib/nutrition";
+import { type DayNutrition, dayNutrition, type Range } from "@/lib/nutrition";
 import { useSetup } from "@/lib/setup";
 import { useCoach } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 const fmt = (r: Range | null, unit = "g") => (r ? `${r.low}-${r.high} ${unit}` : "—");
+
+/** Carbohidratos antes, durante y después de cada sesión del día. */
+export function FuelTable({ n }: { n: DayNutrition }) {
+  if (!n.sessions.length) return null;
+  return (
+    <div className="-mx-1 overflow-x-auto px-1">
+      <table className="w-full max-w-3xl text-[14px]">
+        <caption className="sr-only">Carbohidratos alrededor de cada sesión</caption>
+        <thead>
+          <tr className="text-left text-[12px] font-semibold uppercase tracking-[0.05em] text-muted-foreground [font-stretch:80%]">
+            <th className="pr-3 pb-1.5 font-semibold">Sesión</th>
+            <th className="pr-3 pb-1.5 text-right font-semibold">Antes</th>
+            <th className="pr-3 pb-1.5 text-right font-semibold">Durante</th>
+            <th className="pb-1.5 text-right font-semibold">Después</th>
+          </tr>
+        </thead>
+        <tbody>
+          {n.sessions.map((s) => (
+            <tr key={s.time} className="border-t border-rule align-top">
+              <td className="py-2 pr-3">
+                <span className="num mr-2 text-muted-foreground">{s.time}</span>
+                <span className="font-medium">{s.title}</span>
+                <span className="block text-[13px] text-muted-foreground">{s.note}</span>
+              </td>
+              <td className="num py-2 pr-3 text-right whitespace-nowrap">{fmt(s.before)}</td>
+              <td className="num py-2 pr-3 text-right whitespace-nowrap">{fmt(s.during, "g/h")}</td>
+              <td className="num py-2 text-right whitespace-nowrap">{fmt(s.after)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 /** Carbohidratos del día, opcional: se abre a pedido y queda recordado. */
 export function NutritionSheet({ items }: { items: DayItem[] }) {
@@ -47,38 +81,11 @@ export function NutritionSheet({ items }: { items: DayItem[] }) {
           </div>
           <p className="max-w-[70ch] text-[14px] text-muted-foreground">{n.reason}</p>
 
-          {n.sessions.length > 0 && (
-            <div className="-mx-1 overflow-x-auto px-1">
-              <table className="w-full max-w-3xl text-[14px]">
-                <caption className="sr-only">Carbohidratos alrededor de cada sesión</caption>
-                <thead>
-                  <tr className="text-left text-[12px] font-semibold uppercase tracking-[0.05em] text-muted-foreground [font-stretch:80%]">
-                    <th className="pr-3 pb-1.5 font-semibold">Sesión</th>
-                    <th className="pr-3 pb-1.5 text-right font-semibold">Antes</th>
-                    <th className="pr-3 pb-1.5 text-right font-semibold">Durante</th>
-                    <th className="pb-1.5 text-right font-semibold">Después</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {n.sessions.map((s) => (
-                    <tr key={s.time} className="border-t border-rule align-top">
-                      <td className="py-2 pr-3">
-                        <span className="num mr-2 text-muted-foreground">{s.time}</span>
-                        <span className="font-medium">{s.title}</span>
-                        <span className="block text-[13px] text-muted-foreground">{s.note}</span>
-                      </td>
-                      <td className="num py-2 pr-3 text-right whitespace-nowrap">{fmt(s.before)}</td>
-                      <td className="num py-2 pr-3 text-right whitespace-nowrap">{fmt(s.during, "g/h")}</td>
-                      <td className="num py-2 text-right whitespace-nowrap">{fmt(s.after)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+          <FuelTable n={n} />
           <p className="text-[12px] text-muted-foreground">
             Antes: 1 a 3 h previas. Después: en la primera hora. Calculado con tu peso; cambialo en{" "}
-            <Link href="/configuracion" className="underline">Configuración</Link>. Pautas generales; no reemplazan a un nutricionista.
+            <Link href="/configuracion" className="underline">Configuración</Link>. El plan de comidas está en{" "}
+            <Link href="/nutricion" className="underline">Nutrición</Link>. Pautas generales; no reemplazan a un nutricionista.
           </p>
         </div>
       )}

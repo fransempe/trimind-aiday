@@ -1,4 +1,5 @@
 import { DisciplineSheet } from "@/components/analysis/discipline-sheet";
+import { AgentChat } from "@/components/agent-chat";
 import { TopBar } from "@/components/layout/top-bar";
 import { ConclusionSheet } from "@/components/today/conclusion-sheet";
 import { ReadinessSheet } from "@/components/today/readiness-sheet";
@@ -26,13 +27,14 @@ export default function AnalisisPage() {
         <div>
           <h2 id="ai-results" className="text-[22px] font-bold tracking-[-0.01em] [font-stretch:80%]">Resultados de la IA</h2>
           <p className="mt-1 max-w-[70ch] text-[14px] text-muted-foreground">
-            Cuatro especialistas opinan en paralelo, el Head Coach decide y las reglas validan. Tocá Ask Coaching Team en la banda superior para correrlo.
+            Cinco especialistas opinan en paralelo, el Head Coach decide y las reglas validan. Tocá Ask Coaching Team en la banda superior para correrlo.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-x-10 gap-y-10 xl:grid-cols-12">
           <div className="space-y-10 xl:col-span-8">
             <ConclusionSheet compact />
             <WhyPanel />
+            <AgentChat agent="head_coach" suggestions={["¿Por qué decidiste esto hoy?", "¿Qué pasa si igual hago la sesión completa?", "¿Cómo llego a la carrera?"]} />
           </div>
           <div className="space-y-10 xl:col-span-4">
             <StationsSheet compact />
